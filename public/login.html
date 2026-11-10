@@ -1,24 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title> MinWarranty | Login </title>
-        <link rel="stylesheet" href="/CSS/style.css">
-    </head>
-    <body>
-        <header id="header">MinWarranty</header>
-        <nav id="left-nav">
-            <ul id="nav-links-user">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <title>MinWarranty | Login</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/auth.js" defer></script>
+</head>
+
+<body class="auth-page">
+
+    <!-- Website Header -->
+    <header id="header" class="auth-header">
+        <a href="index.html" class="brand">
+            MinWarranty
+        </a>
+
+        <nav aria-label="Main navigation">
+            <ul class="auth-nav-links">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="login.html" aria-current="page">Login</a></li>
+                <li><a href="register.html">Register</a></li>
             </ul>
         </nav>
-        <main>
+    </header>
 
-        </main>
-        <footer>
+    <!-- Main Login Section -->
+    <main class="auth-main">
 
-        </footer>
-    </body>
+        <section class="auth-card"
+                 aria-labelledby="login-title">
+
+            <div class="auth-card-top">
+                <div class="auth-logo">MW</div>
+
+                <h1 id="login-title">Welcome Back</h1>
+
+                <p>
+                    Log in to manage your warranties.
+                </p>
+            </div>
+
+            <!-- Login Form -->
+            <form id="auth-form"
+                  data-mode="login"
+                  class="auth-form">
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        autocomplete="email"
+                        maxlength="254"
+                        required>
+                </div>
+
+                <!-- Password -->
+                <div class="form-group">
+                    <label for="password">Password</label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required>
+                </div>
+
+                <!-- Error / Success Messages -->
+                <p id="message"
+                   role="status"
+                   aria-live="polite"></p>
+
+                <!-- Submit Button -->
+                <button type="submit" class="auth-button">
+                    Log In
+                </button>
+            </form>
+
+            <!-- Registration Link -->
+            <p class="auth-switch">
+                Don't have an account?
+                <a href="register.html">Register here</a>
+            </p>
+
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="auth-footer">
+        <p>&copy; 2026 MinWarranty. All rights reserved.</p>
+    </footer>
+
+</body>
 </html>

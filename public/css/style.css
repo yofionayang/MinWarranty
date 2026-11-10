@@ -96,3 +96,271 @@ button,
         flex-direction: column;
     }
 }
+
+
+/* =========================================
+   MINWARRANTY - LOGIN & REGISTRATION
+   Theme: Minerva #B5DEDA
+   ========================================= */
+
+   .auth-page {
+    --minerva: #B5DEDA;
+    --minerva-light: #EAF6F4;
+    --minerva-dark: #2D5553;
+
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    background: linear-gradient(
+        135deg,
+        #EAF6F4,
+        #FFFFFF
+    );
+
+    color: #263D3B;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Header */
+
+.auth-page .auth-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+
+    padding: 20px 8%;
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #D6EAE7;
+}
+
+.auth-page .brand {
+    color: var(--minerva-dark);
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.auth-nav-links {
+    display: flex;
+    gap: 24px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.auth-nav-links a {
+    color: #2D5553;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-nav-links a:hover,
+.auth-nav-links a[aria-current="page"] {
+    color: #166F68;
+    text-decoration: underline;
+}
+
+/* Main content */
+
+.auth-main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 48px 20px;
+}
+
+/* Form card */
+
+.auth-card {
+    width: 100%;
+    max-width: 430px;
+    box-sizing: border-box;
+
+    padding: 38px;
+    background-color: #FFFFFF;
+    border: 1px solid #D8ECE9;
+    border-radius: 16px;
+
+    box-shadow: 0 12px 35px rgba(45, 85, 83, 0.09);
+}
+
+.auth-card-top {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.auth-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 54px;
+    height: 54px;
+    margin: 0 auto 20px;
+
+    border-radius: 14px;
+    background-color: var(--minerva);
+    color: var(--minerva-dark);
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.auth-card h1 {
+    font-size: 27px;
+    margin: 0 0 10px;
+    color: #263D3B;
+}
+
+.auth-card-top p {
+    margin: 0;
+    color: #607875;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Form fields */
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.auth-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.auth-form label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2D5553;
+}
+
+.auth-form input {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 13px 14px;
+    border: 1px solid #CBDCD9;
+    border-radius: 8px;
+
+    font: inherit;
+    font-size: 14px;
+    background-color: #FFFFFF;
+    color: #263D3B;
+}
+
+.auth-form input:focus {
+    outline: 2px solid #458E87;
+    outline-offset: 2px;
+    border-color: #458E87;
+}
+
+.auth-form input::placeholder {
+    color: #829592;
+}
+
+.auth-form small {
+    color: #607875;
+    font-size: 12px;
+}
+
+/* Form button */
+
+.auth-button {
+    width: 100%;
+    padding: 14px;
+
+    border: none;
+    border-radius: 8px;
+
+    background-color: var(--minerva);
+    color: #203F3C;
+
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+
+    transition: background-color 0.2s ease;
+}
+
+.auth-button:hover {
+    background-color: #9BCFC9;
+}
+
+.auth-button:focus-visible {
+    outline: 2px solid #2D5553;
+    outline-offset: 3px;
+}
+
+/* Messages and bottom links */
+
+.auth-form #message {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.auth-form #message:empty {
+    display: none;
+}
+
+.auth-switch {
+    margin-top: 24px;
+    text-align: center;
+    font-size: 13px;
+    color: #607875;
+}
+
+.auth-switch a {
+    color: #216E67;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.auth-switch a:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+
+.auth-footer {
+    padding: 20px;
+    text-align: center;
+    font-size: 12px;
+    color: #607875;
+}
+
+/* Mobile responsiveness */
+
+@media (max-width: 600px) {
+    .auth-page .auth-header {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .auth-nav-links {
+        gap: 18px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .auth-main {
+        padding: 30px 16px;
+    }
+
+    .auth-card {
+        padding: 28px 22px;
+    }
+
+    .auth-card h1 {
+        font-size: 24px;
+    }
+}
