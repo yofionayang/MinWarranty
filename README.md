@@ -1,21 +1,21 @@
-#MinWarranty
+# MinWarranty
 
 ##Team Members
   Evan Champagne    40326134
   Yu Par Aung       40276673
 
-##Tech Stack:
+## Tech Stack:
 
-###Front end:
+### Front end:
   HTML5, CSS, JavaScript
   
-###Back end
+### Back end
   Node.js with Express
 
-###Persistence:
+### Persistence:
   JSON Files
 
-##Feature List:
+## Feature List:
 
 **Public**
   - public landing page, usable without account
@@ -33,7 +33,7 @@
  - Warranty tracking, upcoming warranty end date alerts, email notifiations
  - Live search, live filtering, drag and drop pictures of receipts
 
-##Setup
+## Setup
 
 **prerequisites:** Python 3.11+ and Git
 
@@ -58,7 +58,7 @@
 
    python -c "import secrets; print(secrets.token.hex(32))"
 
-##Run
+## Run
 
 **Development** (debug one, auto-reload)
 
