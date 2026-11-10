@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title> MinWarranty </title>
         <link rel="stylesheet" href="/CSS/style.css">
+        <script src="js/calculator.js"></script>
     </head>
     <body>
         <header id="header">MinWarranty</header>
@@ -31,7 +32,43 @@
                     <a href="register.html" class="btn-primary"> Start tracking your warranties</a>
                     <a href="login.html" class="btn-secondary">Log in</a>
             </section>
-
+            <section id="public-feature">
+                <div class="calculator-container">
+                    <div class="calculator-header">
+                        <span class="calculator-tag">FREE TOOL</span>
+                        <h2>When does your warranty expire?</h2>
+                        <p>
+                            Enter your purchase date and warranty duration
+                            to find out how much coverage you have left
+                        </p>
+                    </div>
+                    <div class="calculator-card">
+                        <div class="calculator-inputs">
+                            <div class="form-group">
+                                <label for="purchaseDate">Purchase Date</label>
+                                <input type="date" id="purchaseDate">
+                            </div>
+                            <div class="form-group">
+                                <label for="warrantyDuration">Warranty Duration</label>
+                                <select id="warrantyDuration">
+                                    <option value="6">6 months</option>
+                                    <option value="12">1 year</option>
+                                    <option value="24" selected>2 years</option>
+                                    <option value="36">3 years</option>
+                                    <option value="60">5 years</option>
+                                    <option value="120">10 years</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="button" id="calculateWarranty">Calculate Expiration</button>
+                        <div id="warrantyResult" class="warranty-result" aria-live="polite" hidden>
+                            <span class="result-label">ESTIMATED EXPIRATION DATE</span>
+                            <h3 id="expirationDate"></h3>
+                            <p id="reaminingWarranty"></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </main>
         <footer>
 
