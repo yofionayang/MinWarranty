@@ -1,4 +1,34 @@
 
+# ==================================
+# MinWarranty - Git Ignore
+# ==================================
+
+# Node.js dependencies
 node_modules/
-.DS_Store
+
+# Environment variables and secrets
 .env
+.env.*
+!.env.example
+
+# macOS system files
+.DS_Store
+
+# Logs
+*.log
+npm-debug.log*
+
+# Runtime data - users and warranties
+data/*
+!data/.gitkeep
+
+# Temporary files
+tmp/
+temp/
+
+# Editor settings
+.vscode/
+.idea/
+
+# Test coverage
+coverage/
