@@ -1,6 +1,7 @@
 # MinWarranty
 
-##Team Members
+## Team Members
+
   Evan Champagne    40326134
   Yu Par Aung       40276673
 
