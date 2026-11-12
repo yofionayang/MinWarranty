@@ -120,7 +120,6 @@ button,
     );
 
     color: #263D3B;
-    font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Header */
@@ -283,6 +282,7 @@ button,
 
     background-color: var(--minerva);
     color: #203F3C;
+    font-family:inherit;
 
     font-size: 15px;
     font-weight: bold;
@@ -364,3 +364,409 @@ button,
         font-size: 24px;
     }
 }
+
+/*---------------------------------*/
+/* index.html CSS                  */
+/*---------------------------------*/
+
+.landing-page {
+    --minerva: #B5DEDA;
+    --minerva-light: #EAF6F4;
+    --minerva-dark: #2D5553;
+ 
+    min-height: 100vh;
+ 
+    background: linear-gradient(
+        135deg,
+        #EAF6F4,
+        #FFFFFF
+    );
+ 
+    color: #263D3B;
+}
+ 
+/* Header and navigation */
+ 
+.landing-page header {
+    gap: 1.5rem;
+    padding: 1.25rem 8%;
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #D6EAE7;
+    color: var(--minerva-dark);
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+ 
+.landing-page header nav {
+    font-size: 1rem;
+    font-weight: 500;
+}
+ 
+#left-nav {
+    margin-left: auto;
+}
+ 
+ 
+.landing-page nav ul {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+ 
+.landing-page nav a {
+    color: var(--minerva-dark);
+    text-decoration: none;
+}
+ 
+.landing-page nav a:hover,
+.landing-page nav a[aria-current="page"] {
+    color: #166F68;
+    text-decoration: underline;
+}
+ 
+/* Focus states */
+ 
+.landing-page a:focus-visible,
+.landing-page button:focus-visible,
+.landing-page input:focus-visible,
+.landing-page select:focus-visible {
+    outline: 2px solid #458E87;
+    outline-offset: 2px;
+}
+ 
+/* Section headings */
+ 
+.landing-page main h2 {
+    margin: 0 0 1.5rem;
+    font-size: clamp(1.4rem, 3.5vw, 1.9rem);
+    color: #263D3B;
+}
+ 
+/* Hero */
+ 
+#hero {
+    padding: 3rem 0 2.5rem;
+    text-align: center;
+}
+ 
+#hero h1 {
+    margin: 0 0 1rem;
+    color: #263D3B;
+}
+ 
+.hero-subtext {
+    max-width: 60ch;
+    margin: 0 auto;
+    color: #4B6360;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+ 
+.hero-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1.75rem;
+}
+ 
+.btn-primary,
+.btn-secondary {
+    display: inline-block;
+    padding: 0.8rem 1.4rem;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+ 
+.btn-primary {
+    border: 2px solid var(--minerva-dark);
+    background-color: var(--minerva-dark);
+    color: #FFFFFF;
+}
+ 
+.btn-primary:hover {
+    border-color: #216E67;
+    background-color: #216E67;
+}
+ 
+.btn-secondary {
+    border: 2px solid #458E87;
+    background-color: transparent;
+    color: #216E67;
+}
+ 
+.btn-secondary:hover {
+    background-color: var(--minerva);
+    color: #203F3C;
+}
+ 
+/* Public feature: warranty calculator */
+ 
+#public-feature {
+    padding: 1rem 0 3rem;
+}
+ 
+.calculator-container {
+    max-width: 640px;
+    margin: 0 auto;
+}
+ 
+.calculator-header {
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+ 
+.calculator-tag {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    background-color: var(--minerva);
+    color: var(--minerva-dark);
+    font-size: 0.8rem;
+    font-weight: bold;
+    letter-spacing: 0.04em;
+}
+ 
+.calculator-header h2 {
+    margin: 0.75rem 0 0.5rem;
+}
+ 
+.calculator-header p {
+    max-width: 50ch;
+    margin: 0 auto;
+    color: #4B6360;
+    line-height: 1.6;
+}
+ 
+.calculator-card {
+    padding: 2rem;
+    background-color: #FFFFFF;
+    border: 1px solid #D8ECE9;
+    border-radius: 16px;
+    box-shadow: 0 12px 35px rgba(45, 85, 83, 0.09);
+}
+ 
+.calculator-inputs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.25rem;
+}
+ 
+.calculator-inputs .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+ 
+.calculator-inputs label {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--minerva-dark);
+}
+ 
+.calculator-inputs input,
+.calculator-inputs select {
+    width: 100%;
+    max-width: none;
+    padding: 0.8rem 0.9rem;
+    border: 1px solid #CBDCD9;
+    border-radius: 8px;
+    background-color: #FFFFFF;
+    color: #263D3B;
+    font: inherit;
+    font-size: 0.9rem;
+}
+ 
+.calculator-inputs input:focus,
+.calculator-inputs select:focus {
+    border-color: #458E87;
+}
+ 
+#calculateWarranty {
+    width: 100%;
+    margin-top: 1.5rem;
+    padding: 0.9rem;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--minerva);
+    color: #203F3C;
+    font-size: 0.95rem;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+ 
+#calculateWarranty:hover {
+    background-color: #9BCFC9;
+}
+ 
+.warranty-result {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: var(--minerva-light);
+    border-left: 4px solid #458E87;
+    border-radius: 8px;
+    text-align: center;
+}
+ 
+/* Keeps the hidden attribute working despite the rules above */
+.warranty-result[hidden] {
+    display: none;
+}
+ 
+.result-label {
+    display: block;
+    margin-bottom: 0.25rem;
+    color: var(--minerva-dark);
+    font-size: 0.75rem;
+    font-weight: bold;
+    letter-spacing: 0.06em;
+}
+ 
+#expirationDate {
+    margin: 0 0 0.25rem;
+    color: #263D3B;
+    font-size: 1.6rem;
+}
+ 
+#remainingWarranty {
+    margin: 0;
+    color: #4B6360;
+}
+ 
+/* How it works */
+ 
+#how-it-works,
+#features {
+    padding: 2.5rem 0;
+    border-top: 1px solid #D6EAE7;
+}
+ 
+#how-it-works h2,
+#features h2 {
+    text-align: center;
+}
+ 
+.steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: step;
+}
+ 
+.step {
+    counter-increment: step;
+}
+ 
+.step::before {
+    content: counter(step);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    margin-bottom: 0.75rem;
+    border-radius: 14px;
+    background-color: var(--minerva);
+    color: var(--minerva-dark);
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+ 
+.step h3 {
+    margin: 0 0 0.5rem;
+    color: #263D3B;
+}
+ 
+.step p {
+    margin: 0;
+    color: #4B6360;
+    line-height: 1.6;
+}
+ 
+/* Features */
+ 
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+ 
+.feature-card {
+    padding: 1.5rem;
+    background-color: #FFFFFF;
+    border: 1px solid #D8ECE9;
+    border-top: 4px solid var(--minerva);
+    border-radius: 16px;
+}
+ 
+.feature-card h3 {
+    margin: 0 0 0.5rem;
+    color: #263D3B;
+}
+ 
+.feature-card p {
+    margin: 0;
+    color: #607875;
+    line-height: 1.6;
+}
+ 
+/* Footer */
+ 
+.site-footer {
+    margin-top: 2rem;
+    background-color: #FFFFFF;
+    border-top: 1px solid #D6EAE7;
+    color: #607875;
+}
+ 
+.footer-content {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 1rem;
+}
+ 
+.footer-brand {
+    margin: 0;
+    color: var(--minerva-dark);
+    font-weight: bold;
+}
+ 
+.footer-copyright {
+    grid-column: 1 / -1;
+    margin: 0;
+    padding-top: 1rem;
+    border-top: 1px solid #D6EAE7;
+    font-size: 0.8rem;
+}
+ 
+/* Mobile responsiveness */
+ 
+@media (max-width: 600px) {
+
+    .landing-page header {
+    align-items: center;
+    padding: 1.25rem;
+    }
+
+    #left-nav {
+        margin-left: 0;
+    }
+
+    .landing-page nav ul {
+        justify-content: center;
+    }
+}
+ 
