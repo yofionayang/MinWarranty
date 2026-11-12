@@ -4,7 +4,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title> MinWarranty </title>
-        <link rel="stylesheet" href="/CSS/style.css">
+        <link rel="stylesheet" href="css/style.css">
+        <script src="js/calculator.js" defer></script>
     </head>
     <body>
         <header id="header">MinWarranty</header>
@@ -21,10 +22,100 @@
             </ul>
         </nav>
         <main>
-
+            <section id="hero">
+                <h1 id="hero-heading">Never lose a warranty claim again.</h1>
+                <p class="hero-subtext">
+                    Keep every warranty in one place, see exactly when coverage ends,
+                    and have the details ready when something breaks.
+                </p>
+                <div class="hero-actions">
+                    <a href="register.html" class="btn-primary"> Start tracking your warranties</a>
+                    <a href="login.html" class="btn-secondary">Log in</a>
+            </section>
+            <section id="public-feature">
+                <div class="calculator-container">
+                    <div class="calculator-header">
+                        <span class="calculator-tag">FREE TOOL</span>
+                        <h2>When does your warranty expire?</h2>
+                        <p>
+                            Enter your purchase date and warranty duration
+                            to find out how much coverage you have left
+                        </p>
+                    </div>
+                    <div class="calculator-card">
+                        <div class="calculator-inputs">
+                            <div class="form-group">
+                                <label for="purchaseDate">Purchase Date</label>
+                                <input type="date" id="purchaseDate">
+                            </div>
+                            <div class="form-group">
+                                <label for="warrantyDuration">Warranty Duration</label>
+                                <select id="warrantyDuration">
+                                    <option value="6">6 months</option>
+                                    <option value="12">1 year</option>
+                                    <option value="24" selected>2 years</option>
+                                    <option value="36">3 years</option>
+                                    <option value="60">5 years</option>
+                                    <option value="120">10 years</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="button" id="calculateWarranty">Calculate Expiration</button>
+                        <div id="warrantyResult" class="warranty-result" aria-live="polite" hidden>
+                            <span class="result-label">ESTIMATED EXPIRATION DATE</span>
+                            <h3 id="expirationDate"></h3>
+                            <p id="remainingWarranty"></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="how-it-works" aria-labelledby="how-it-works-heading">
+                <h2 id="how-it-works-heading">How it Works</h2>
+                <ol class="steps" role="list">
+                    <li class="step">
+                        <h3>Create your account </h3>
+                        <p>Register with your email and password.</p>
+                    </li>
+                    <li class="step">
+                        <h3>Add your products</h3>
+                        <p>Enter each product's name, purchase date, and warranty length.</p>
+                    </li>
+                    <li class="step">
+                        <h3>See what's covered</h3>
+                        <p>Check every warranty's expiry date and days remaining from your dashboard</p>
+                    </li>
+                </ol>
+            </section>
+            <section id="features" aria-labelledby="features-heading">
+                <h2 id="features-heading">Why track your warranties here?</h2>
+                <ul class="features-grid" role="list">
+                    <li class="feature-card">
+                        <h3>Everything in one place</h3>
+                        <p>Stop digging through email and drawers. Every product and its coverage details live in a single dashboard.</p>
+                    </li>
+                    <li class="feature-card">
+                        <h3>Know what's expiring first</h3>
+                        <p>See the exact expiry date and days remaining for each warranty, so nothing lapses unnoticed.</p>
+                    </li>
+                    <li class="feature-card">
+                        <h3>Private to your account</h3>
+                        <p>Your warranties are visible only to you. No one else can view or change them.</p>
+                    </li>
+                </ul>
+            </section>
         </main>
-        <footer>
-
+        <footer class="site-footer">
+            <div class="footer-content">
+                <p class="footer-brand">MinWarranty</p>
+                <nav class="footer-nav" aria-label="Footer">
+                    <ul role="list">
+                        <li><a href="register.html">Register</a></li>
+                        <li><a href="login.html">Log in</a></li>
+                        <li><a href="https://github.com/yofionayang/MinWarranty" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                    </ul>
+                </nav>
+                <p class="footer-copyright">&copy; 2026 MinWarranty. Course Project for SOEN 287</p>
+            </div>
         </footer>
     </body>
 </html>
