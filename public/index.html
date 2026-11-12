@@ -4,8 +4,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title> MinWarranty </title>
-        <link rel="stylesheet" href="/CSS/style.css">
-        <script src="js/calculator.js"></script>
+        <link rel="stylesheet" href="css/style.css">
+        <script src="js/calculator.js" defer></script>
     </head>
     <body>
         <header id="header">MinWarranty</header>
@@ -64,10 +64,27 @@
                         <div id="warrantyResult" class="warranty-result" aria-live="polite" hidden>
                             <span class="result-label">ESTIMATED EXPIRATION DATE</span>
                             <h3 id="expirationDate"></h3>
-                            <p id="reaminingWarranty"></p>
+                            <p id="remainingWarranty"></p>
                         </div>
                     </div>
                 </div>
+            </section>
+            <section id="how-it-works" aria-labelledby="how-it-works-heading">
+                <h2 id="how-it-works-heading">How it Works</h2>
+                <ol class="steps" role="list">
+                    <li class="step">
+                        <h3>Create your account </h3>
+                        <p>Register with your email and password.</p>
+                    </li>
+                    <li class="step">
+                        <h3>Add your products</h3>
+                        <p>Enter each product's name, purchase date, and warranty length.</p>
+                    </li>
+                    <li class="step">
+                        <h3>See what's covered</h3>
+                        <p>Check every warranty's expiry date and days remaining from your dashboard</p>
+                    </li>
+                </ol>
             </section>
         </main>
         <footer>
