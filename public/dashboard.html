@@ -55,6 +55,42 @@
                     </select>
                 </div>
             </div>
-
+            <p id="warrantyCount" class="warranty-count" aria-live="polite"></p>
+            <ul id="warrantyList" class="warranty-list" role="list">
+                <!-- Sample card for styling. JavaScript will render the real cards-->>
+                <li class="waranty-card" data-id="sample">
+                    <div class="warranty-card-header">
+                        <h2>Sony WH1000XM5 Headphones</h2>
+                        <span class="status-badge status-active">Active</span>
+                    </div>
+                    <dl class="warranty-details">
+                        <div>
+                            <dt>Purchased</dt>
+                            <dd><time datetime="2025-03-14">March 14, 2025</time></dd>
+                        </div>
+                        <div>
+                            <dt>Expires</dt>
+                            <dd><time datetime="2027-03-14">March 14, 2027</time></dd>
+                        </div>
+                        <div>
+                            <dt>Remaining</dt>
+                            <dd>478 days</dd>
+                        </div>
+                        <div>
+                            <dt>Retailer</dt>
+                            <dd>Best Buy</dd>
+                        </div>
+                        <div>
+                            <dt>Serial Number</dt>
+                            <dd>SN-8841-2207</dd>
+                        </div>
+                    </dl>
+                    <p class="warranty-notes">Receipt is in the blue folder.</p>
+                    <div class="warranty-cations">
+                        <button type="button" class="edit-warranty" aria-label="Edit Sony WH1000XM5 Headphones">Edit</button>
+                        <button type="button" class="delete-warranty" aria-label="Delete Sony WH1000XM5 Headphones">Delete</button>
+                    </div>
+                </li>
+            </ul>
     </body>
 </html>
