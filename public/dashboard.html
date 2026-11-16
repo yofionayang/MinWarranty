@@ -4,17 +4,57 @@
         <meta charset = "utf-8">
         <meta name = "viewport" contnet = "width=device-width, initial-scale = 1">
         <title> MinWarranty | Dashboard </title>
-        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="css/style.css">
+        <script src="js/dashboard.js"></script>
     </head>
     <body>
-        <header id ="header"> Dashboard </header>
-        <nav id ="left-nav">
-            <ul id = "nav-links-user">
-                <li><a href ="index.html"> Home</a></li>
-                <li><a href ="dashboard.html"> Dashboard</a></li>
-            </ul>
-        </nav>
-    
+        <header id ="header"> 
+            Dashboard
+            <nav id ="left-nav" aria-label="Main">
+                <ul id = "nav-links-user">
+                    <li><a href ="index.html"> Home</a></li>
+                    <li><a href ="dashboard.html" aria-current="page"> Dashboard</a></li>
+                </ul>
+            </nav>
+            <nav id="right-nav" aria-label="Account">
+                <ul id="nav-links-account">
+                    <li>
+                        <form action="/logout" method="post">
+                            <button type="submit">Log Out</button>
+                        </form>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <section id="warranties" aria-labelledby="warranties-heading">
+            <div class="section-header">
+                <h1 id="warranties-heading">My Warranties</h1>
+                <button type="button" id="addWarranty">+ Add Warranty</button>
+            </div>
+            <div class="warranty-toolbar">
+                <div class="form-group">
+                    <label for="searchWarranties">Search</label>
+                    <input type="search" id="searchWaranties" placeholder="Product or retailer" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label for="filterStatus">Status</label>
+                    <select id="filterStatus">
+                        <option value="all" selected>All</option>
+                        <option value="active">Active</option>
+                        <option value="expiring">Expiring soon</option>
+                        <option value="expired">Expired</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="sortWarranties">Sort by</label>
+                    <select id="sortWarranties">
+                        <option value="expiry-asc" selected>Expiry date (ascending)</option>
+                        <optiion value="expiry-desc">Expiry date (descending)</optiion>
+                        <option value="purchase-desc">Purchase date</option>
+                        <option value="name-asc">Product Name (A to Z)</option>
+                    </select>
+                </div>
+            </div>
 
     </body>
 </html>
