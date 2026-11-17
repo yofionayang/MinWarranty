@@ -40,7 +40,7 @@ def _find_owned(warranties, user_id, warranty_id):
 class WarrantyRepository:
 
     def __init__(self,store):
-        self.store = store
+        self._store = store
 
     def list_for_user(self, user_id):
         return [w for w in self._store.read() if w["user_id"] == user_id]
