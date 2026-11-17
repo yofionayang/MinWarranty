@@ -32,3 +32,6 @@ temp/
 
 # Test coverage
 coverage/
+
+data/*
+!data/.gitkeep
