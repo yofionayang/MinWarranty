@@ -130,5 +130,27 @@
                     </select>
                     <p id="warrantyDurationError" class="form-error" role="alert"></p>
                 </div>
+                <div class="form-group">
+                    <label for="retailer">Retailer or brand <span class="optional">(optional)</span></label>
+                    <input type="text" id="retailer" name="retailer" maxlength="100" autocomplete="off" aria-describedby="retailerError">
+                    <p id="retailerError" class="form-error" role="alert"></p>
+                </div>
+                <div class="form-group">
+                    <label for="serialNumber">Serial or model number <span class="optional">(optional)</span></label>
+                    <input type="text" id="serialNumber" name="serialNumber" maxlength="100" autocomplete="off" aria-describedby="serialNumberError">
+                    <p id="serialNumberError" class="form-error" role="alert"></p>
+                </div>
+                <div class="form-group">
+                    <label for="notes">Notes<span class="optional">(optional)</span></label>
+                    <textarea id="notes" name="notes" rows="3" maxlength="500" aria-describedby="notesError"></textarea>
+                    <p id="notesError" class="form-error" role="alert"></p>
+                </div>
+                <p id="warrantyFormError" class="form-error" role="alert"></p>
+                <div class="dialog-actions">
+                    <button type="button" id="cancelWarranty">Cancel</button>
+                    <button type="submit" id="saveWarranty">Save warranty</button>
+                </div>
+            </form>
+        </dialog>
     </body>
 </html>
