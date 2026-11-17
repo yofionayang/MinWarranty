@@ -35,7 +35,7 @@ function validateEmail(email) {
   return normalizedEmail;
 }
 
-// Validate registration passwords.
+// Validate registration passwords, bcrypt uses at most 72 bytes of a password.
 function validatePassword(password) {
 
   // Password must be a string.
