@@ -61,7 +61,7 @@ class JsonStore:
 
         return records
 
-    def _save(self, reords):
+    def _save(self, records):
         file_descriptor, temp_path = tempfile.mkstemp(dir=self._path.parent, suffix=".tmp")
 
         try: 
