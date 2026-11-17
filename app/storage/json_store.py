@@ -24,7 +24,7 @@ class JsonStore:
     # a single JSON file that holds a lsit of records
 
     def __init__(self, path):
-        self.path = Path(path)
+        self._path = Path(path)
         self._path.parent.mkdir(parents=True, exist_ok=True)
         self._lock = FileLock(f"{self._path}.lock")
 
@@ -48,7 +48,7 @@ class JsonStore:
 
     def _load(self):
 
-        if not self._path.eists():
+        if not self._path.exists():
             return []
         try:
             with self._path.open(encoding="utf-8") as file:
