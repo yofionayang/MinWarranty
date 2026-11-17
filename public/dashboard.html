@@ -2,14 +2,14 @@
 <html lang = "en">
     <head> 
         <meta charset = "utf-8">
-        <meta name = "viewport" contnet = "width=device-width, initial-scale = 1">
+        <meta name = "viewport" content = "width=device-width, initial-scale = 1">
         <title> MinWarranty | Dashboard </title>
         <link rel="stylesheet" href="css/style.css">
-        <script src="js/dashboard.js"></script>
+        <script src="js/dashboard.js" defer></script>
     </head>
-    <body>
+    <body class="site-theme">
         <header id ="header"> 
-            Dashboard
+            MinWarranty
             <nav id ="left-nav" aria-label="Main">
                 <ul id = "nav-links-user">
                     <li><a href ="index.html"> Home</a></li>
@@ -26,140 +26,142 @@
                 </ul>
             </nav>
         </header>
-        <section id="warranties" aria-labelledby="warranties-heading">
-            <div class="section-header">
-                <h1 id="warranties-heading">My Warranties</h1>
-                <button type="button" id="addWarranty">+ Add Warranty</button>
-            </div>
-            <div class="warranty-toolbar">
-                <div class="form-group">
-                    <label for="searchWarranties">Search</label>
-                    <input type="search" id="searchWaranties" placeholder="Product or retailer" autocomplete="off">
+        <main>
+            <section id="warranties" aria-labelledby="warranties-heading">
+                <div class="section-header">
+                    <h1 id="warranties-heading">My Warranties</h1>
+                    <button type="button" id="addWarranty">+ Add Warranty</button>
                 </div>
-                <div class="form-group">
-                    <label for="filterStatus">Status</label>
-                    <select id="filterStatus">
-                        <option value="all" selected>All</option>
-                        <option value="active">Active</option>
-                        <option value="expiring">Expiring soon</option>
-                        <option value="expired">Expired</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="sortWarranties">Sort by</label>
-                    <select id="sortWarranties">
-                        <option value="expiry-asc" selected>Expiry date (ascending)</option>
-                        <optiion value="expiry-desc">Expiry date (descending)</optiion>
-                        <option value="purchase-desc">Purchase date</option>
-                        <option value="name-asc">Product Name (A to Z)</option>
-                    </select>
-                </div>
-            </div>
-            <p id="warrantyCount" class="warranty-count" aria-live="polite"></p>
-            <ul id="warrantyList" class="warranty-list" role="list">
-                <!-- Sample card for styling. JavaScript will render the real cards-->>
-                <li class="waranty-card" data-id="sample">
-                    <div class="warranty-card-header">
-                        <h2>Sony WH1000XM5 Headphones</h2>
-                        <span class="status-badge status-active">Active</span>
+                <div class="warranty-toolbar">
+                    <div class="form-group">
+                        <label for="searchWarranties">Search</label>
+                        <input type="search" id="searchWarranties" placeholder="Product or retailer" autocomplete="off">
                     </div>
-                    <dl class="warranty-details">
-                        <div>
-                            <dt>Purchased</dt>
-                            <dd><time datetime="2025-03-14">March 14, 2025</time></dd>
-                        </div>
-                        <div>
-                            <dt>Expires</dt>
-                            <dd><time datetime="2027-03-14">March 14, 2027</time></dd>
-                        </div>
-                        <div>
-                            <dt>Remaining</dt>
-                            <dd>478 days</dd>
-                        </div>
-                        <div>
-                            <dt>Retailer</dt>
-                            <dd>Best Buy</dd>
-                        </div>
-                        <div>
-                            <dt>Serial Number</dt>
-                            <dd>SN-8841-2207</dd>
-                        </div>
-                    </dl>
-                    <p class="warranty-notes">Receipt is in the blue folder.</p>
-                    <div class="warranty-cations">
-                        <button type="button" class="edit-warranty" aria-label="Edit Sony WH1000XM5 Headphones">Edit</button>
-                        <button type="button" class="delete-warranty" aria-label="Delete Sony WH1000XM5 Headphones">Delete</button>
+                    <div class="form-group">
+                        <label for="filterStatus">Status</label>
+                        <select id="filterStatus">
+                            <option value="all" selected>All</option>
+                            <option value="active">Active</option>
+                            <option value="expiring">Expiring soon</option>
+                            <option value="expired">Expired</option>
+                        </select>
                     </div>
-                </li>
-            </ul>
-            <div id="emptyState" class="empty-state" hidden>
-                <h2>No warranties yet</h2>
-                <p>Add your first product to start tracking its coverage.</p>
-                <button type="button" id="addFirstWarranty">Add your first warranty</button>
-            </div>
-            <p id="noResults" class="no-results" hidden>No warranties match your search or filter.</p>
-        </section>
+                    <div class="form-group">
+                        <label for="sortWarranties">Sort by</label>
+                        <select id="sortWarranties">
+                            <option value="expiry-asc" selected>Expiry date (ascending)</option>
+                            <option value="expiry-desc">Expiry date (descending)</optiion>
+                            <option value="purchase-desc">Purchase date</option>
+                            <option value="name-asc">Product Name (A to Z)</option>
+                        </select>
+                    </div>
+                </div>
+                <p id="warrantyCount" class="warranty-count" aria-live="polite"></p>
+                <ul id="warrantyList" class="warranty-list" role="list">
+                    <!-- Sample card for styling. JavaScript will render the real cards-->
+                    <li class="warranty-card" data-id="sample">
+                        <div class="warranty-card-header">
+                            <h2>Sony WH1000XM5 Headphones</h2>
+                            <span class="status-badge status-active">Active</span>
+                        </div>
+                        <dl class="warranty-details">
+                            <div>
+                                <dt>Purchased</dt>
+                                <dd><time datetime="2025-03-14">March 14, 2025</time></dd>
+                            </div>
+                            <div>
+                                <dt>Expires</dt>
+                                <dd><time datetime="2027-03-14">March 14, 2027</time></dd>
+                            </div>
+                            <div>
+                                <dt>Remaining</dt>
+                                <dd>478 days</dd>
+                            </div>
+                            <div>
+                                <dt>Retailer</dt>
+                                <dd>Best Buy</dd>
+                            </div>
+                            <div>
+                                <dt>Serial Number</dt>
+                                <dd>SN-8841-2207</dd>
+                            </div>
+                        </dl>
+                        <p class="warranty-notes">Receipt is in the blue folder.</p>
+                        <div class="warranty-actions">
+                            <button type="button" class="edit-warranty" aria-label="Edit Sony WH1000XM5 Headphones">Edit</button>
+                            <button type="button" class="delete-warranty" aria-label="Delete Sony WH1000XM5 Headphones">Delete</button>
+                        </div>
+                    </li>
+                </ul>
+                <div id="emptyState" class="empty-state" hidden>
+                    <h2>No warranties yet</h2>
+                    <p>Add your first product to start tracking its coverage.</p>
+                    <button type="button" id="addFirstWarranty">Add your first warranty</button>
+                </div>
+                <p id="noResults" class="no-results" hidden>No warranties match your search or filter.</p>
+            </section>
 
-        <!--Add / edit warranty-->>
-        <dialog id="warrantyDialog" aria-labelledby="warrantyDialogHeading">
-            <form id="warrantyForm" action="/warranties" method="post" novalidate>
-                <h2 id="warrantyDialogHeading">Add warranty</h2>
-                <input type="hidden" id="warrantyId" name="id">
-                <div class="form-group">
-                    <label for="productName">Product name</label>
-                    <input type="text" id="productName" name="productName" maxlength="100" autocpmplete="off"required aria-describedby="productNameError">
-                    <p id="productNameError" class="form-error" role="alert"></p>
-                </div>
-                <div class="form-group">
-                    <label for="purchaseDate">Purchase date</label>
-                    <input type="date" id="purchaseDate" name="purchaseDate" required aria-describedby="purchaseDateError">
-                    <p id="purchaseDateError" class="form-error" role="alert"></p>
-                </div>
-                <div class="form-group">
-                    <label for="warrantyDuration">Warranty duration</label>
-                    <select id="warrantyDuration" name="warrantyDuration" required aria-describedby="warrantyDurationError">
-                        <option value="3">3 months</option>
-                        <option value="6">6 months</option>
-                        <option value="12">1 year</option>
-                        <option value="18">18 months</option>
-                        <option value="24" selected>2 years</option>
-                        <option value="36">3 years</option>
-                        <option value="48">4 years</option>
-                        <option value="60">5 years</option>
-                        <option value="120">10 years</option>
-                    </select>
-                    <p id="warrantyDurationError" class="form-error" role="alert"></p>
-                </div>
-                <div class="form-group">
-                    <label for="retailer">Retailer or brand <span class="optional">(optional)</span></label>
-                    <input type="text" id="retailer" name="retailer" maxlength="100" autocomplete="off" aria-describedby="retailerError">
-                    <p id="retailerError" class="form-error" role="alert"></p>
-                </div>
-                <div class="form-group">
-                    <label for="serialNumber">Serial or model number <span class="optional">(optional)</span></label>
-                    <input type="text" id="serialNumber" name="serialNumber" maxlength="100" autocomplete="off" aria-describedby="serialNumberError">
-                    <p id="serialNumberError" class="form-error" role="alert"></p>
-                </div>
-                <div class="form-group">
-                    <label for="notes">Notes<span class="optional">(optional)</span></label>
-                    <textarea id="notes" name="notes" rows="3" maxlength="500" aria-describedby="notesError"></textarea>
-                    <p id="notesError" class="form-error" role="alert"></p>
-                </div>
-                <p id="warrantyFormError" class="form-error" role="alert"></p>
+            <!--Add / edit warranty-->
+            <dialog id="warrantyDialog" aria-labelledby="warrantyDialogHeading">
+                <form id="warrantyForm" action="/warranties" method="post" novalidate>
+                    <h2 id="warrantyDialogHeading">Add warranty</h2>
+                    <input type="hidden" id="warrantyId" name="id">
+                    <div class="form-group">
+                        <label for="productName">Product name</label>
+                        <input type="text" id="productName" name="productName" maxlength="100" autocomplete="off"required aria-describedby="productNameError">
+                        <p id="productNameError" class="form-error" role="alert"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="purchaseDate">Purchase date</label>
+                        <input type="date" id="purchaseDate" name="purchaseDate" required aria-describedby="purchaseDateError">
+                        <p id="purchaseDateError" class="form-error" role="alert"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="warrantyDuration">Warranty duration</label>
+                        <select id="warrantyDuration" name="warrantyDuration" required aria-describedby="warrantyDurationError">
+                            <option value="3">3 months</option>
+                            <option value="6">6 months</option>
+                            <option value="12">1 year</option>
+                            <option value="18">18 months</option>
+                            <option value="24" selected>2 years</option>
+                            <option value="36">3 years</option>
+                            <option value="48">4 years</option>
+                            <option value="60">5 years</option>
+                            <option value="120">10 years</option>
+                        </select>
+                        <p id="warrantyDurationError" class="form-error" role="alert"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="retailer">Retailer or brand <span class="optional">(optional)</span></label>
+                        <input type="text" id="retailer" name="retailer" maxlength="100" autocomplete="off" aria-describedby="retailerError">
+                        <p id="retailerError" class="form-error" role="alert"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="serialNumber">Serial or model number <span class="optional">(optional)</span></label>
+                        <input type="text" id="serialNumber" name="serialNumber" maxlength="100" autocomplete="off" aria-describedby="serialNumberError">
+                        <p id="serialNumberError" class="form-error" role="alert"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="notes">Notes <span class="optional">(optional)</span></label>
+                        <textarea id="notes" name="notes" rows="3" maxlength="500" aria-describedby="notesError"></textarea>
+                        <p id="notesError" class="form-error" role="alert"></p>
+                    </div>
+                    <p id="warrantyFormError" class="form-error" role="alert"></p>
+                    <div class="dialog-actions">
+                        <button type="button" id="cancelWarranty">Cancel</button>
+                        <button type="submit" id="saveWarranty">Save warranty</button>
+                    </div>
+                </form>
+            </dialog>
+            <!--Delete confirmation-->
+            <dialog id="deleteDialog" aria-labelledby="deleteDialogHeading">
+                <h2 id="deleteDialogHeading">Delete Warranty?</h2>
+                <p>This permanently deletes <strong id="deleteProductName"></strong>. This can't be undone.</p>
                 <div class="dialog-actions">
-                    <button type="button" id="cancelWarranty">Cancel</button>
-                    <button type="submit" id="saveWarranty">Save warranty</button>
+                    <button type="button" id="cancelDelete">Cancel</button>
+                    <button type="button" id="confirmDelete">Delete</button>
                 </div>
-            </form>
-        </dialog>
-        <!--Delete confirmation-->
-        <dialog id="deleteDialog" aria-labelledby="deleteDialogHeading">
-            <h2 id="deleteDialogHeading">Delete Warranty?</h2>
-            <p>This permenantly deletes <strong id="deleteProductName"></strong>. This can't be undone.</p>
-            <div class="dialog-actions">
-                <button type="button" id="cancelDelete">Cancel</button>
-                <button type="button" id="confirmDelete">Delete</button>
-            </div>
-        </dialog>
+            </dialog>
+        </main>
     </body>
 </html>
