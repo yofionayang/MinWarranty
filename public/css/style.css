@@ -369,7 +369,7 @@ button,
 /* index.html CSS                  */
 /*---------------------------------*/
 
-.landing-page {
+.site-theme {
     --minerva: #B5DEDA;
     --minerva-light: #EAF6F4;
     --minerva-dark: #2D5553;
@@ -387,7 +387,7 @@ button,
  
 /* Header and navigation */
  
-.landing-page header {
+.site-theme header {
     gap: 1.5rem;
     padding: 1.25rem 8%;
     background-color: #FFFFFF;
@@ -397,7 +397,7 @@ button,
     font-weight: bold;
 }
  
-.landing-page header nav {
+.site-theme header nav {
     font-size: 1rem;
     font-weight: 500;
 }
@@ -407,7 +407,7 @@ button,
 }
  
  
-.landing-page nav ul {
+.site-theme nav ul {
     display: flex;
     gap: 1.5rem;
     flex-wrap: wrap;
@@ -416,30 +416,30 @@ button,
     list-style: none;
 }
  
-.landing-page nav a {
+.site-theme nav a {
     color: var(--minerva-dark);
     text-decoration: none;
 }
  
-.landing-page nav a:hover,
-.landing-page nav a[aria-current="page"] {
+.site-theme nav a:hover,
+.site-theme nav a[aria-current="page"] {
     color: #166F68;
     text-decoration: underline;
 }
  
 /* Focus states */
  
-.landing-page a:focus-visible,
-.landing-page button:focus-visible,
-.landing-page input:focus-visible,
-.landing-page select:focus-visible {
+.site-theme a:focus-visible,
+.site-theme button:focus-visible,
+.site-theme input:focus-visible,
+.site-theme select:focus-visible {
     outline: 2px solid #458E87;
     outline-offset: 2px;
 }
  
 /* Section headings */
  
-.landing-page main h2 {
+.site-theme main h2 {
     margin: 0 0 1.5rem;
     font-size: clamp(1.4rem, 3.5vw, 1.9rem);
     color: #263D3B;
@@ -756,7 +756,7 @@ button,
  
 @media (max-width: 600px) {
 
-    .landing-page header {
+    .site-theme header {
     align-items: center;
     padding: 1.25rem;
     }
@@ -765,8 +765,455 @@ button,
         margin-left: 0;
     }
 
-    .landing-page nav ul {
+    .site-theme nav ul {
         justify-content: center;
     }
 }
+
+/* --------------------------- */
+/* dashboard.html css          */
+/* ---------------------------*/
+
+
+/* Page layout */
+
+#warranties {
+    padding: 2rem 0 3rem;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+.section-header h1 {
+    margin: 0;
+    color: #263D3B;
+}
+
+/* Summary counts */
+
+.warranty-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 0 0 1.5rem;
+}
+
+.summary-card {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 0.25rem;
+    padding: 1.25rem;
+    background-color: #FFFFFF;
+    border: 1px solid #D8ECE9;
+    border-radius: 16px;
+}
+
+.summary-card dt {
+    color: #607875;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.summary-card dd {
+    margin: 0;
+    color: #263D3B;
+    font-size: 1.9rem;
+    font-weight: bold;
+}
+
+/* Toolbar */
+
+.warranty-toolbar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding: 1.25rem;
+    background-color: #FFFFFF;
+    border: 1px solid #D8ECE9;
+    border-radius: 16px;
+}
+
+.warranty-count {
+    margin: 0 0 1rem;
+    color: #4B6360;
+    font-size: 0.9rem;
+}
+
+/* Form fields (toolbar and add/edit dialog) */
+
+.site-theme .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.site-theme .form-group label {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--minerva-dark);
+}
+
+.site-theme .form-group input,
+.site-theme .form-group select,
+.site-theme .form-group textarea {
+    width: 100%;
+    max-width: none;
+    padding: 0.8rem 0.9rem;
+    border: 1px solid #CBDCD9;
+    border-radius: 8px;
+    background-color: #FFFFFF;
+    color: #263D3B;
+    font: inherit;
+    font-size: 0.9rem;
+}
+
+.site-theme .form-group textarea {
+    resize: vertical;
+}
+
+.site-theme .form-group input:focus,
+.site-theme .form-group select:focus,
+.site-theme .form-group textarea:focus {
+    border-color: #458E87;
+}
+
+.site-theme .form-group [aria-invalid="true"] {
+    border-color: #a52323;
+}
+
+.site-theme textarea:focus-visible {
+    outline: 2px solid #458E87;
+    outline-offset: 2px;
+}
+
+.optional {
+    color: #607875;
+    font-size: 0.85rem;
+    font-weight: normal;
+}
+
+.form-error {
+    margin: 0;
+    color: #a52323;
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+.form-error:empty {
+    display: none;
+}
+
+/* Buttons (override the global blue button) */
+
+#addWarranty,
+#addFirstWarranty,
+#saveWarranty,
+#cancelWarranty,
+#cancelDelete,
+#confirmDelete,
+.edit-warranty,
+.delete-warranty {
+    margin: 0;
+    padding: 0.7rem 1.2rem;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    font: inherit;
+    font-size: 0.95rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#addWarranty {
+    background-color: var(--minerva-dark);
+    border-color: var(--minerva-dark);
+    color: #FFFFFF;
+}
+
+#addWarranty:hover {
+    background-color: #216E67;
+    border-color: #216E67;
+}
+
+#saveWarranty,
+#addFirstWarranty {
+    background-color: var(--minerva);
+    color: #203F3C;
+}
+
+#saveWarranty:hover,
+#addFirstWarranty:hover {
+    background-color: #9BCFC9;
+}
+
+#cancelWarranty,
+#cancelDelete,
+.edit-warranty {
+    background-color: transparent;
+    border-color: #458E87;
+    color: #216E67;
+}
+
+#cancelWarranty:hover,
+#cancelDelete:hover,
+.edit-warranty:hover {
+    background-color: var(--minerva);
+    color: #203F3C;
+}
+
+#confirmDelete {
+    background-color: #a52323;
+    border-color: #a52323;
+    color: #FFFFFF;
+}
+
+#confirmDelete:hover {
+    background-color: #8A1C1C;
+    border-color: #8A1C1C;
+}
+
+.delete-warranty {
+    background-color: transparent;
+    border-color: #a52323;
+    color: #a52323;
+}
+
+.delete-warranty:hover {
+    background-color: #a52323;
+    color: #FFFFFF;
+}
+
+.edit-warranty,
+.delete-warranty {
+    padding: 0.4rem 0.9rem;
+    font-size: 0.85rem;
+}
+
+/* Warranty cards */
+
+.warranty-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.warranty-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem;
+    background-color: #FFFFFF;
+    border: 1px solid #D8ECE9;
+    border-top: 4px solid var(--minerva);
+    border-radius: 16px;
+}
+
+.warranty-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.site-theme .warranty-card h2 {
+    margin: 0;
+    color: #263D3B;
+    font-size: 1.15rem;
+    overflow-wrap: anywhere;
+}
+
+.warranty-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 0.75rem 1rem;
+    margin: 0;
+}
+
+.warranty-details dt {
+    color: #607875;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.warranty-details dd {
+    margin: 0;
+    color: #263D3B;
+    font-weight: 500;
+    overflow-wrap: anywhere;
+}
+
+.warranty-notes {
+    margin: 0;
+    padding-top: 0.75rem;
+    border-top: 1px solid #D6EAE7;
+    color: #4B6360;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.warranty-notes:empty {
+    display: none;
+}
+
+.warranty-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: auto;
+}
+
+/* Status badges (the text carries the meaning, color only reinforces it) */
+
+.status-badge {
+    flex-shrink: 0;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.status-active {
+    background-color: var(--minerva);
+    color: var(--minerva-dark);
+}
+
+.status-expiring {
+    background-color: #FFF4D6;
+    color: #7A5200;
+}
+
+.status-expired {
+    background-color: #FBE4E4;
+    color: #a52323;
+}
+
+/* Empty and no-results states */
+
+.empty-state {
+    padding: 3rem 1.5rem;
+    background-color: #FFFFFF;
+    border: 1px dashed #CBDCD9;
+    border-radius: 16px;
+    text-align: center;
+}
+
+.site-theme .empty-state h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1.25rem;
+}
+
+.empty-state p {
+    margin: 0 0 1.25rem;
+    color: #4B6360;
+}
+
+.no-results {
+    margin: 1rem 0 0;
+    padding: 1.5rem;
+    background-color: #FFFFFF;
+    border: 1px dashed #CBDCD9;
+    border-radius: 16px;
+    color: #4B6360;
+    text-align: center;
+}
+
+/* Keeps the hidden attribute working despite the rules above */
+.empty-state[hidden],
+.no-results[hidden] {
+    display: none;
+}
+
+/* Dialogs */
+
+.site-theme dialog {
+    width: min(92vw, 520px);
+    padding: 2rem;
+    background-color: #FFFFFF;
+    border: 1px solid #D8ECE9;
+    border-radius: 16px;
+    box-shadow: 0 12px 35px rgba(45, 85, 83, 0.09);
+    color: #263D3B;
+}
+
+.site-theme dialog::backdrop {
+    background-color: rgba(38, 61, 59, 0.45);
+}
+
+.site-theme dialog h2 {
+    margin: 0;
+    color: #263D3B;
+    font-size: 1.4rem;
+}
+
+#warrantyForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+#deleteDialog {
+    width: min(92vw, 420px);
+}
+
+#deleteDialog h2 {
+    margin-bottom: 0.75rem;
+}
+
+#deleteDialog p {
+    margin: 0 0 1.5rem;
+    color: #4B6360;
+    line-height: 1.6;
+}
+
+.dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+/* Mobile responsiveness */
+
+@media (max-width: 600px) {
+    .warranty-summary {
+        gap: 0.5rem;
+    }
+
+    .summary-card {
+        padding: 1rem 0.75rem;
+    }
+
+    .summary-card dt {
+        font-size: 0.75rem;
+    }
+
+    .summary-card dd {
+        font-size: 1.5rem;
+    }
+
+    .warranty-toolbar {
+        padding: 1rem;
+    }
+
+    .site-theme dialog {
+        padding: 1.5rem 1.25rem;
+    }
+
+    .dialog-actions button {
+        flex: 1;
+    }
+}
+
  
