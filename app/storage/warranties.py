@@ -65,34 +65,34 @@ class WarrantyRepository:
             warranties.append(warranty)
         return warranty
 
-def update(self, user_id, warranty_id, fields):
-    # replace the editable fileds. Returns the updated warranty or none
+    def update(self, user_id, warranty_id, fields):
+        # replace the editable fileds. Returns the updated warranty or none
 
-    fields = _checked_fields(fields)
+        fields = _checked_fields(fields)
 
-    with self._store.transaction() as warranties:
-        warranty = _find_owned(warranties, user_id, warranty_id)
+        with self._store.transaction() as warranties:
+            warranty = _find_owned(warranties, user_id, warranty_id)
 
-        if warranty is None:
-            return None
+            if warranty is None:
+                return None
 
-        warranty.update(fields)
-        warranty["updated_at"] = utc_now_iso()
+            warranty.update(fields)
+            warranty["updated_at"] = utc_now_iso()
 
-        return dict(warranty)
+            return dict(warranty)
 
-def delete(self, user_id, warranty_id):
-    # delete a warranty. Returns True if it was deleted, False otherwise
+    def delete(self, user_id, warranty_id):
+        # delete a warranty. Returns True if it was deleted, False otherwise
 
-    with self._store.transaction() as warranties:
-        warranty= _find_owned(warranties, user_id, warranty_id)
+        with self._store.transaction() as warranties:
+            warranty= _find_owned(warranties, user_id, warranty_id)
 
-        if warranty is None:
-            return False
+            if warranty is None:
+                return False
 
-        warranties.remove(warranty)
+            warranties.remove(warranty)
 
-        return True
+            return True
         
 
         
