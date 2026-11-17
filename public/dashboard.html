@@ -152,5 +152,14 @@
                 </div>
             </form>
         </dialog>
+        <!--Delete confirmation-->
+        <dialog id="deleteDialog" aria-labelledby="deleteDialogHeading">
+            <h2 id="deleteDialogHeading">Delete Warranty?</h2>
+            <p>This permenantly deletes <strong id="deleteProductName"></strong>. This can't be undone.</p>
+            <div class="dialog-actions">
+                <button type="button" id="cancelDelete">Cancel</button>
+                <button type="button" id="confirmDelete">Delete</button>
+            </div>
+        </dialog>
     </body>
 </html>
