@@ -25,6 +25,9 @@ data/*
 # Temporary files
 tmp/
 temp/
+venv/
+__pycache__/
+*.pyc
 
 # Editor settings
 .vscode/
@@ -33,5 +36,3 @@ temp/
 # Test coverage
 coverage/
 
-data/*
-!data/.gitkeep
