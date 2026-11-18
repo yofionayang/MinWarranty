@@ -6,6 +6,7 @@
         <title> MinWarranty | Dashboard </title>
         <link rel="stylesheet" href="css/style.css">
         <script src="js/dashboard.js" defer></script>
+        <script src="js/logout.js" defer></script>
     </head>
     <body class="site-theme">
         <header id ="header"> 
@@ -19,7 +20,7 @@
             <nav id="right-nav" aria-label="Account">
                 <ul id="nav-links-account">
                     <li>
-                        <form action="/logout" method="post">
+                        <form id="logout-form" action="/api/auth/logout" method="post">
                             <button type="submit">Log Out</button>
                         </form>
                     </li>
