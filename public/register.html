@@ -124,32 +124,6 @@
         <p>&copy; 2026 MinWarranty. All rights reserved.</p>
     </footer>
 
-    <!-- Check that both passwords match -->
-    <script>
-        const passwordInput =
-            document.getElementById("password");
-
-        const confirmInput =
-            document.getElementById("confirm-password");
-
-        function checkPasswords() {
-            if (confirmInput.value !== passwordInput.value) {
-                confirmInput.setCustomValidity(
-                    "Passwords do not match."
-                );
-            } else {
-                confirmInput.setCustomValidity("");
-            }
-        }
-
-        passwordInput.addEventListener("input", checkPasswords);
-        confirmInput.addEventListener("input", checkPasswords);
-
-        document.getElementById("auth-form")
-            .addEventListener("submit", function () {
-                checkPasswords();
-            }, true);
-    </script>
 
 </body>
 </html>
