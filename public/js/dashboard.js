@@ -37,5 +37,37 @@ const SORTERS = {
     a.productName.localeCompare(b.productName, undefined, { sensitivity: 'base' })
 };
 
+const elements = {
+  heading: document.getElementById('warranties-heading'),
+  list: document.getElementById('warrantyList'),
+  emptyState: document.getElementById('emptyState'),
+  noResults: document.getElementById('noResults'),
+  count: document.getElementById('warrantyCount'),
+  totalCount: document.getElementById('totalCount'),
+  expiringCount: document.getElementById('expiringCount'),
+  expiredCount: document.getElementById('expiredCount'),
+  search: document.getElementById('searchWarranties'),
+  filterStatus: document.getElementById('filterStatus'),
+  sort: document.getElementById('sortWarranties'),
+  addButton: document.getElementById('addWarranty'),
+  addFirstButton: document.getElementById('addFirstWarranty'),
+  warrantyDialog: document.getElementById('warrantyDialog'),
+  dialogHeading: document.getElementById('warrantyDialogHeading'),
+  form: document.getElementById('warrantyForm'),
+  formError: document.getElementById('warrantyFormError'),
+  saveButton: document.getElementById('saveWarranty'),
+  cancelButton: document.getElementById('cancelWarranty'),
+  deleteDialog: document.getElementById('deleteDialog'),
+  deleteName: document.getElementById('deleteProductName'),
+  deleteError: document.getElementById('deleteError'),
+  cancelDelete: document.getElementById('cancelDelete'),
+  confirmDelete: document.getElementById('confirmDelete')
+};
+
+// the hidden id field plus one element per form field
+const fields = Object.fromEntries(
+    ['warrantyId', ...FIELD_NAMES].map(name => [name, document.getElementById(name)])
+);
+
 
 
