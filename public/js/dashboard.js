@@ -36,3 +36,6 @@ const SORTERS = {
   'name-asc': (a, b) =>
     a.productName.localeCompare(b.productName, undefined, { sensitivity: 'base' })
 };
+
+
+
