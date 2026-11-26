@@ -78,24 +78,28 @@ function redirectToLogin() {
 
 // ---------- Building the list ----------
 
-function createElement(tag, className, text) {
-  const element = document.createElement(tag);
+function createElement(tag, className, text) { // creates an HTML element with an optional CSS class and text content
+  const element = document.createElement(tag); //creates a new HTML element using the specified tag (div, button, h2 etc.)
 
+  // if a CSS class was provided, assign it to the element
+  // this allows the element to be stled using css
   if (className) element.className = className;
+  //if text was provided, set it as the element's text content
+  //checking against the undefined allows empty strings to be used intentionally
   if (text !== undefined) element.textContent = text;
 
-  return element;
+  return element; // return the completed elements so other functions can use it
 }
 
-function createDetail(label, value, isoDate) {
-  const row = createElement('div');
-  const description = createElement('dd');
+function createDetail(label, value, isoDate) { // creates a row displaying a warranty detail
+  const row = createElement('div'); // create div for entire detail row
+  const description = createElement('dd'); // create description element with actual value
 
-  if (isoDate) {
-    const time = createElement('time', '', value);
+  if (isoDate) { // create a time element if date exists
+    const time = createElement('time', '', value); // create <time> element
     time.dateTime = isoDate;
     description.append(time);
-  } else {
+  } else { // if no ISO data, display time as text
     description.textContent = value;
   }
 
@@ -103,33 +107,33 @@ function createDetail(label, value, isoDate) {
   return row;
 }
 
-function createActions(item) {
+function createActions(item) { // creates the edit and delete buttons for a warranty card
   const actions = createElement('div', 'warranty-actions');
 
   const edit = createElement('button', 'edit-warranty', 'Edit');
-  edit.type = 'button';
-  edit.setAttribute('aria-label', `Edit ${item.productName}`);
+  edit.type = 'button'; // this button should not submit form when clicked
+  edit.setAttribute('aria-label', `Edit ${item.productName}`); // accessibility
 
-  const remove = createElement('button', 'delete-warranty', 'Delete');
+  const remove = createElement('button', 'delete-warranty', 'Delete'); // create delete button
   remove.type = 'button';
   remove.setAttribute('aria-label', `Delete ${item.productName}`);
 
-  actions.append(edit, remove);
+  actions.append(edit, remove); // add both button to the actions container
   return actions;
 }
 
-function createCard(item) {
-  const card = createElement('li', 'warranty-card');
-  card.dataset.id = item.id;
+function createCard(item) { // creates the complete HTML card for a single warranty
+  const card = createElement('li', 'warranty-card'); //<li> element represents warranty card
+  card.dataset.id = item.id; // store the warranty's unique id in a data attribute
 
   const header = createElement('div', 'warranty-card-header');
-  header.append(
+  header.append( // add the product name and its current status to the warranty card
     createElement('h2', '', item.productName),
     createElement('span', `status-badge status-${item.status}`, STATUS_LABELS[item.status])
   );
 
-  const details = createElement('dl', 'warranty-details');
-  details.append(
+  const details = createElement('dl', 'warranty-details'); 
+  details.append(// add the main warranty details to the description list
     createDetail('Purchased', formatDate(item.purchaseDate), item.purchaseDate),
     createDetail('Expires', formatDate(item.expiryDate), item.expiryDate),
     createDetail(
@@ -141,7 +145,7 @@ function createCard(item) {
   if (item.retailer) details.append(createDetail('Retailer', item.retailer));
   if (item.serialNumber) details.append(createDetail('Serial number', item.serialNumber));
 
-  card.append(header, details);
+  card.append(header, details); // add the header and warranty details to the main card
 
   if (item.notes) card.append(createElement('p', 'warranty-notes', item.notes));
 
@@ -156,7 +160,7 @@ function toViewModel(warranty, today) {
   const expiryDate = getExpiryDate(warranty.purchaseDate, warranty.warrantyDuration);
   const daysRemaining = getDaysRemaining(expiryDate, today);
 
-  return {
+  return { // return a new object containing the original warranty information along with calculated fields
     ...warranty,
     retailer: warranty.retailer ?? '',
     serialNumber: warranty.serialNumber ?? '',
@@ -167,19 +171,19 @@ function toViewModel(warranty, today) {
   };
 }
 
-function getVisibleItems(items) {
+function getVisibleItems(items) { // filters and sorts the warranties based on the user's selected options
   const query = elements.search.value.trim().toLowerCase();
   const status = elements.filterStatus.value;
-  const sorter = SORTERS[elements.sort.value] ?? SORTERS['expiry-asc'];
+  const sorter = SORTERS[elements.sort.value] ?? SORTERS['expiry-asc']; // get sorting function selected by the user
 
-  return items
-    .filter(item => status === 'all' || item.status === status)
-    .filter(
+  return items // start with the original list of warranty items
+    .filter(item => status === 'all' || item.status === status) // only keep warranties matching the selected value
+    .filter( // check whether the search text matches
       item =>
         !query ||
         [item.productName, item.retailer].some(text => text.toLowerCase().includes(query))
     )
-    .sort(sorter);
+    .sort(sorter); // sort the remaining warranites using the selected sorting functions
 }
 
 // The summary always counts every warranty, regardless of the search and filter.
@@ -189,45 +193,45 @@ function renderSummary(items) {
   elements.expiredCount.textContent = items.filter(item => item.status === 'expired').length;
 }
 
-function render() {
+function render() { // main rendering function. updates the webpage whenever the warranty information or display options change
   const today = getToday();
-  const items = warranties.map(warranty => toViewModel(warranty, today));
-  const visible = getVisibleItems(items);
-  const hasWarranties = items.length > 0;
+  const items = warranties.map(warranty => toViewModel(warranty, today)); // convert every original warranty into a view model
+  const visible = getVisibleItems(items); // apply the selected search, status, and sorting options
+  const hasWarranties = items.length > 0; // check whether at least one warranty exists
 
-  renderSummary(items);
+  renderSummary(items); // update the summary counters using ALL warranties
   elements.list.replaceChildren(...visible.map(createCard));
 
   elements.emptyState.hidden = hasWarranties;
   elements.noResults.hidden = !hasWarranties || visible.length > 0;
 
-  elements.count.textContent = hasWarranties
+  elements.count.textContent = hasWarranties 
     ? `Showing ${visible.length} of ${items.length} ${items.length === 1 ? 'warranty' : 'warranties'}`
-    : '';
+    : ''; // if no warranties display the empty string
 }
 
 // ---------- Add / edit form ----------
 
-function setFieldError(name, message) {
-  document.getElementById(`${name}Error`).textContent = message;
-  fields[name].setAttribute('aria-invalid', String(Boolean(message)));
+function setFieldError(name, message) { // displays an error message for a specific form field
+  document.getElementById(`${name}Error`).textContent = message; 
+  fields[name].setAttribute('aria-invalid', String(Boolean(message))); // accessibility
 }
 
-function clearFormErrors() {
+function clearFormErrors() { // removes all validation errors from the form
   FIELD_NAMES.forEach(name => setFieldError(name, ''));
   elements.formError.textContent = '';
 }
 
-function showFieldErrors(errors) {
-  FIELD_NAMES.forEach(name => setFieldError(name, errors[name] || ''));
-  elements.formError.textContent = errors.form || '';
+function showFieldErrors(errors) { // displays validation errors after user attempts to submit the form
+  FIELD_NAMES.forEach(name => setFieldError(name, errors[name] || '')); // loop through every form field. if an error exists, display it. Otherwise, display an empty string (clear previous errors)
+  elements.formError.textContent = errors.form || ''; 
 
-  const firstInvalid = FIELD_NAMES.find(name => errors[name]);
-  if (firstInvalid) fields[firstInvalid].focus();
+  const firstInvalid = FIELD_NAMES.find(name => errors[name]); // find the first field that contains a validation error. find() returns the first matching field name
+  if (firstInvalid) fields[firstInvalid].focus(); // if an invalid field was found, move cursoe to it.
 }
 
 // Make sure the duration dropdown can show a length that is not in its list.
-function ensureDurationOption(months) {
+function ensureDurationOption(months) { 
   const value = String(months);
   const exists = [...fields.warrantyDuration.options].some(option => option.value === value);
 
@@ -236,18 +240,18 @@ function ensureDurationOption(months) {
   }
 }
 
-function fillForm(warranty) {
+function fillForm(warranty) { // fills the form with info from an existing warranty (used for editing)
   ensureDurationOption(warranty.warrantyDuration);
-
+  // populate each form field using the existing warranty information
   fields.productName.value = warranty.productName;
   fields.purchaseDate.value = warranty.purchaseDate;
   fields.warrantyDuration.value = String(warranty.warrantyDuration);
-  fields.retailer.value = warranty.retailer ?? '';
-  fields.serialNumber.value = warranty.serialNumber ?? '';
-  fields.notes.value = warranty.notes ?? '';
+  fields.retailer.value = warranty.retailer ?? ''; //optional
+  fields.serialNumber.value = warranty.serialNumber ?? ''; //optional
+  fields.notes.value = warranty.notes ?? ''; //optional
 }
 
-function readForm() {
+function readForm() { // collects the values entered into the form and returns them as objects
   return {
     productName: fields.productName.value,
     purchaseDate: fields.purchaseDate.value,
@@ -258,8 +262,8 @@ function readForm() {
   };
 }
 
-function openForm(warranty = null) {
-  elements.form.reset();
+function openForm(warranty = null) { // opens the warranty form for creating or editing a warranty
+  elements.form.reset(); // resets all form fields to default values
   clearFormErrors();
 
   // form.reset() does not clear a hidden input once its value has been set,
@@ -267,46 +271,46 @@ function openForm(warranty = null) {
   // an update of the last warranty that was edited.
   fields.warrantyId.value = warranty ? warranty.id : '';
 
-  fields.purchaseDate.min = LIMITS.earliestPurchase;
-  fields.purchaseDate.max = toIsoDate(getToday());
-  elements.dialogHeading.textContent = warranty ? 'Edit warranty' : 'Add warranty';
+  fields.purchaseDate.min = LIMITS.earliestPurchase; // sets the earliest date the user is allowed to select
+  fields.purchaseDate.max = toIsoDate(getToday()); //set the earliest date the user is allowed to select
+  elements.dialogHeading.textContent = warranty ? 'Edit warranty' : 'Add warranty'; // change the dialog header depending on what the user is doing
 
-  if (warranty) fillForm(warranty);
+  if (warranty) fillForm(warranty); // if an existing warranty was provided, populate the form with its info
 
-  elements.warrantyDialog.showModal();
+  elements.warrantyDialog.showModal(); //diaplay the form in a modal dialog (above the reest of the webpage)
 }
 
-function getSaveErrorMessage(error) {
+function getSaveErrorMessage(error) { // determines which error message should be displayed when saving a warranty fails
   return error instanceof ApiError
     ? error.message
     : 'Could not save the warranty. Please try again.';
 }
 
-async function handleSubmit(event) {
+async function handleSubmit(event) { // handles the form submission when the user clicks save
   event.preventDefault();
   clearFormErrors();
 
-  const { values, errors } = validateWarranty(readForm());
+  const { values, errors } = validateWarranty(readForm()); // read the form values and validate them
 
-  if (Object.keys(errors).length > 0) {
+  if (Object.keys(errors).length > 0) { // check if any errors exist
     showFieldErrors(errors);
     return;
   }
 
-  const id = fields.warrantyId.value;
+  const id = fields.warrantyId.value; // get the warranty ID from the hidden form field
 
   // Prevent multiple submissions.
   elements.saveButton.disabled = true;
 
-  try {
+  try { // save warranty using appropriate API operation
     const saved = id ? await api.update(id, values) : await api.create(values);
 
-    warranties = id
-      ? warranties.map(item => (item.id === id ? saved : item))
-      : [...warranties, saved];
+    warranties = id // update the local warranties array with the saved warranty
+      ? warranties.map(item => (item.id === id ? saved : item)) // edit: loop through existing warranties, replace the matching id with new info
+      : [...warranties, saved]; // add: create a new array followed by the newly created warranty
 
-    elements.warrantyDialog.close();
-    render();
+    elements.warrantyDialog.close(); // close the form dialog
+    render(); // refresh the webpage to display updated warranty info
   } catch (error) {
     if (error.status === 401) return redirectToLogin();
 
@@ -322,7 +326,7 @@ async function handleSubmit(event) {
 
 // ---------- Delete ----------
 
-function openDeleteDialog(warranty) {
+function openDeleteDialog(warranty) { //opens confirmation dialog when the user wants to delete a warranty
   pendingDeleteId = warranty.id;
   elements.deleteName.textContent = warranty.productName;
   elements.deleteError.textContent = '';
@@ -335,20 +339,20 @@ function focusHeading() {
   elements.heading.focus();
 }
 
-async function handleConfirmDelete() {
-  if (!pendingDeleteId) return;
+async function handleConfirmDelete() { // Handles the deletion after the user confirms that they want to delete a warranty.
+  if (!pendingDeleteId) return; // check whether a warranty ID is currently stored
 
-  const id = pendingDeleteId;
-  elements.confirmDelete.disabled = true;
+  const id = pendingDeleteId; // store the id of warranty to be deleted
+  elements.confirmDelete.disabled = true; // disable delete button to avoid multiple delete requests
 
   try {
-    await api.remove(id);
+    await api.remove(id); // send deletion request to the API
 
-    warranties = warranties.filter(item => item.id !== id);
+    warranties = warranties.filter(item => item.id !== id); // removes the deleted warranty from the local warranties array
 
-    elements.deleteDialog.close();
-    render();
-    focusHeading();
+    elements.deleteDialog.close(); // close confirmation dialog
+    render(); // refresh page
+    focusHeading(); // move keyboard focus to main heading
   } catch (error) {
     if (error.status === 401) return redirectToLogin();
 
@@ -363,12 +367,12 @@ async function handleConfirmDelete() {
 
 // ---------- Loading and wiring ----------
 
-async function loadWarranties() {
+async function loadWarranties() { // loads the user's warranties from the API when the application starts
   elements.count.textContent = 'Loading warranties...';
 
-  try {
-    warranties = await api.list();
-    render();
+  try { 
+    warranties = await api.list();// request all warranties belonging to the user from the API
+    render(); // refresh the page
   } catch (error) {
     if (error.status === 401) return redirectToLogin();
 
@@ -377,26 +381,36 @@ async function loadWarranties() {
   }
 }
 
-function init() {
+function init() { // initialize the application by preparing the webpage
   // Remove the sample card and placeholder numbers that the HTML ships with.
-  elements.list.replaceChildren();
+  elements.list.replaceChildren(); // removes the sample info present in the HTML files
   [elements.totalCount, elements.expiringCount, elements.expiredCount].forEach(
     element => (element.textContent = '-')
   );
 
-  elements.list.addEventListener('click', event => {
-    const button = event.target.closest('button');
+  elements.list.addEventListener('click', event => { // add event listener to entire warranty list
+    const button = event.target.closest('button'); // find closest button containing the clicked element
     const card = event.target.closest('.warranty-card');
 
     if (!button || !card) return;
 
-    const warranty = warranties.find(item => item.id === card.dataset.id);
-    if (!warranty) return;
+    const warranty = warranties.find(item => item.id === card.dataset.id); // find the original warranty object that belongs to the clicked card
+    if (!warranty) return; // if no matching warranty, stop the function
 
+    // Check whether the clicked button has the CSS class "edit-warranty".
+    // If it does, open the form and populate it with the warranty information.
     if (button.classList.contains('edit-warranty')) openForm(warranty);
+
+    // Check whether the clicked button has the CSS class "delete-warranty".
+    // If it does, open the deletion confirmation dialog for that warranty.
     if (button.classList.contains('delete-warranty')) openDeleteDialog(warranty);
   });
 
+  // Add an input event listener to the search, status filter, and sorting controls.
+  // Whenever the user changes one of these controls, call render()
+  // to update the displayed warranty list.
+  //
+  // input works for both text inputs and select controls.
   [elements.search, elements.filterStatus, elements.sort].forEach(control =>
     control.addEventListener('input', render)
   );
@@ -409,10 +423,10 @@ function init() {
   elements.cancelDelete.addEventListener('click', () => elements.deleteDialog.close());
   elements.confirmDelete.addEventListener('click', handleConfirmDelete);
   elements.deleteDialog.addEventListener('close', () => {
-    pendingDeleteId = null;
+    pendingDeleteId = null; // clear the stored warranty id
   });
 
-  loadWarranties();
+  loadWarranties(); // load the users warranties from the API
 }
 
-init();
+init(); // start the application
