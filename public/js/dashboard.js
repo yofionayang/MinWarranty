@@ -139,3 +139,267 @@ function createCard(item){
     return card;
 }
 
+// ---------- Filtering, sorting, and rendering ----------
+
+// Add the calculated fields (expiry date, days remaining, status) to a warranty.
+function toViewModel(warranty, today) {
+  const expiryDate = getExpiryDate(warranty.purchaseDate, warranty.warrantyDuration);
+  const daysRemaining = getDaysRemaining(expiryDate, today);
+
+  return {
+    ...warranty,
+    retailer: warranty.retailer ?? '',
+    serialNumber: warranty.serialNumber ?? '',
+    notes: warranty.notes ?? '',
+    expiryDate,
+    daysRemaining,
+    status: getStatus(daysRemaining)
+  };
+}
+
+function getVisibleItems(items) {
+  const query = elements.search.value.trim().toLowerCase();
+  const status = elements.filterStatus.value;
+  const sorter = SORTERS[elements.sort.value] ?? SORTERS['expiry-asc'];
+
+  return items
+    .filter(item => status === 'all' || item.status === status)
+    .filter(
+      item =>
+        !query ||
+        [item.productName, item.retailer].some(text => text.toLowerCase().includes(query))
+    )
+    .sort(sorter);
+}
+
+// The summary always counts every warranty, regardless of the search and filter.
+function renderSummary(items) {
+  elements.totalCount.textContent = items.length;
+  elements.expiringCount.textContent = items.filter(item => item.status === 'expiring').length;
+  elements.expiredCount.textContent = items.filter(item => item.status === 'expired').length;
+}
+
+function render() {
+  const today = getToday();
+  const items = warranties.map(warranty => toViewModel(warranty, today));
+  const visible = getVisibleItems(items);
+  const hasWarranties = items.length > 0;
+
+  renderSummary(items);
+  elements.list.replaceChildren(...visible.map(createCard));
+
+  elements.emptyState.hidden = hasWarranties;
+  elements.noResults.hidden = !hasWarranties || visible.length > 0;
+
+  elements.count.textContent = hasWarranties
+    ? `Showing ${visible.length} of ${items.length} ${items.length === 1 ? 'warranty' : 'warranties'}`
+    : '';
+}
+
+// ---------- Add / edit form ----------
+
+function setFieldError(name, message) {
+  document.getElementById(`${name}Error`).textContent = message;
+  fields[name].setAttribute('aria-invalid', String(Boolean(message)));
+}
+
+function clearFormErrors() {
+  FIELD_NAMES.forEach(name => setFieldError(name, ''));
+  elements.formError.textContent = '';
+}
+
+function showFieldErrors(errors) {
+  FIELD_NAMES.forEach(name => setFieldError(name, errors[name] || ''));
+  elements.formError.textContent = errors.form || '';
+
+  const firstInvalid = FIELD_NAMES.find(name => errors[name]);
+  if (firstInvalid) fields[firstInvalid].focus();
+}
+
+// Make sure the duration dropdown can show a length that is not in its list.
+function ensureDurationOption(months) {
+  const value = String(months);
+  const exists = [...fields.warrantyDuration.options].some(option => option.value === value);
+
+  if (!exists) {
+    fields.warrantyDuration.append(new Option(`${months} months`, value));
+  }
+}
+
+function fillForm(warranty) {
+  ensureDurationOption(warranty.warrantyDuration);
+
+  fields.warrantyId.value = warranty.id;
+  fields.productName.value = warranty.productName;
+  fields.purchaseDate.value = warranty.purchaseDate;
+  fields.warrantyDuration.value = String(warranty.warrantyDuration);
+  fields.retailer.value = warranty.retailer ?? '';
+  fields.serialNumber.value = warranty.serialNumber ?? '';
+  fields.notes.value = warranty.notes ?? '';
+}
+
+function readForm() {
+  return {
+    productName: fields.productName.value,
+    purchaseDate: fields.purchaseDate.value,
+    warrantyDuration: Number(fields.warrantyDuration.value),
+    retailer: fields.retailer.value,
+    serialNumber: fields.serialNumber.value,
+    notes: fields.notes.value
+  };
+}
+
+function openForm(warranty = null) {
+  elements.form.reset();
+  clearFormErrors();
+
+  fields.purchaseDate.min = LIMITS.earliestPurchase;
+  fields.purchaseDate.max = toIsoDate(getToday());
+  elements.dialogHeading.textContent = warranty ? 'Edit warranty' : 'Add warranty';
+
+  if (warranty) fillForm(warranty);
+
+  elements.warrantyDialog.showModal();
+}
+
+function getSaveErrorMessage(error) {
+  return error instanceof ApiError
+    ? error.message
+    : 'Could not save the warranty. Please try again.';
+}
+
+async function handleSubmit(event) {
+  event.preventDefault();
+  clearFormErrors();
+
+  const { values, errors } = validateWarranty(readForm());
+
+  if (Object.keys(errors).length > 0) {
+    showFieldErrors(errors);
+    return;
+  }
+
+  const id = fields.warrantyId.value;
+
+  // Prevent multiple submissions.
+  elements.saveButton.disabled = true;
+
+  try {
+    const saved = id ? await api.update(id, values) : await api.create(values);
+
+    warranties = id
+      ? warranties.map(item => (item.id === id ? saved : item))
+      : [...warranties, saved];
+
+    elements.warrantyDialog.close();
+    render();
+  } catch (error) {
+    if (error.status === 401) return redirectToLogin();
+
+    if (error.fieldErrors) {
+      showFieldErrors(error.fieldErrors);
+    } else {
+      elements.formError.textContent = getSaveErrorMessage(error);
+    }
+  } finally {
+    elements.saveButton.disabled = false;
+  }
+}
+
+// ---------- Delete ----------
+
+function openDeleteDialog(warranty) {
+  pendingDeleteId = warranty.id;
+  elements.deleteName.textContent = warranty.productName;
+  elements.deleteError.textContent = '';
+  elements.deleteDialog.showModal();
+}
+
+// The deleted card no longer exists, so move focus somewhere sensible.
+function focusHeading() {
+  elements.heading.setAttribute('tabindex', '-1');
+  elements.heading.focus();
+}
+
+async function handleConfirmDelete() {
+  if (!pendingDeleteId) return;
+
+  const id = pendingDeleteId;
+  elements.confirmDelete.disabled = true;
+
+  try {
+    await api.remove(id);
+
+    warranties = warranties.filter(item => item.id !== id);
+
+    elements.deleteDialog.close();
+    render();
+    focusHeading();
+  } catch (error) {
+    if (error.status === 401) return redirectToLogin();
+
+    elements.deleteError.textContent =
+      error instanceof ApiError
+        ? error.message
+        : 'Could not delete the warranty. Please try again.';
+  } finally {
+    elements.confirmDelete.disabled = false;
+  }
+}
+
+// ---------- Loading and wiring ----------
+
+async function loadWarranties() {
+  elements.count.textContent = 'Loading warranties...';
+
+  try {
+    warranties = await api.list();
+    render();
+  } catch (error) {
+    if (error.status === 401) return redirectToLogin();
+
+    elements.count.textContent =
+      'Could not load your warranties. Refresh the page to try again.';
+  }
+}
+
+function init() {
+  // Remove the sample card and placeholder numbers that the HTML ships with.
+  elements.list.replaceChildren();
+  [elements.totalCount, elements.expiringCount, elements.expiredCount].forEach(
+    element => (element.textContent = '-')
+  );
+
+  elements.list.addEventListener('click', event => {
+    const button = event.target.closest('button');
+    const card = event.target.closest('.warranty-card');
+
+    if (!button || !card) return;
+
+    const warranty = warranties.find(item => item.id === card.dataset.id);
+    if (!warranty) return;
+
+    if (button.classList.contains('edit-warranty')) openForm(warranty);
+    if (button.classList.contains('delete-warranty')) openDeleteDialog(warranty);
+  });
+
+  [elements.search, elements.filterStatus, elements.sort].forEach(control =>
+    control.addEventListener('input', render)
+  );
+
+  elements.addButton.addEventListener('click', () => openForm());
+  elements.addFirstButton.addEventListener('click', () => openForm());
+  elements.form.addEventListener('submit', handleSubmit);
+  elements.cancelButton.addEventListener('click', () => elements.warrantyDialog.close());
+
+  elements.cancelDelete.addEventListener('click', () => elements.deleteDialog.close());
+  elements.confirmDelete.addEventListener('click', handleConfirmDelete);
+  elements.deleteDialog.addEventListener('close', () => {
+    pendingDeleteId = null;
+  });
+
+  loadWarranties();
+}
+
+init();
+
