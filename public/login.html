@@ -1,19 +1,28 @@
+<!--
+    MinWarranty - Login Page
+
+    Shows the form for logging in.
+    Loads auth.js to handle form submission.
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!-- Makes the page fit the device's screen width. -->
     <meta name="viewport"
           content="width=device-width, initial-scale=1">
 
     <title>MinWarranty | Login</title>
 
+    <!-- Loads the page styles. -->
     <link rel="stylesheet" href="css/style.css">
+    <!-- defer lets the browser read the HTML before running auth.js. -->
     <script src="js/auth.js" defer></script>
 </head>
 
 <body class="auth-page">
 
-    <!-- Website Header -->
+    <!-- Header with links to Home, Login, and Register. -->
     <header id="header" class="auth-header">
         <a href="index.html" class="brand">
             MinWarranty
@@ -22,15 +31,16 @@
         <nav aria-label="Main navigation">
             <ul class="auth-nav-links">
                 <li><a href="index.html">Home</a></li>
+                <!-- aria-current marks Login as the current page. -->
                 <li><a href="login.html" aria-current="page">Login</a></li>
                 <li><a href="register.html">Register</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Main Login Section -->
     <main class="auth-main">
 
+        <!-- Uses the Welcome Back heading as the name of this section. -->
         <section class="auth-card"
                  aria-labelledby="login-title">
 
@@ -44,15 +54,18 @@
                 </p>
             </div>
 
-            <!-- Login Form -->
+            <!-- auth.js uses the ID to find the form.
+                 data-mode tells it to handle this as a login. -->
             <form id="auth-form"
                   data-mode="login"
                   class="auth-form">
 
-                <!-- Email -->
                 <div class="form-group">
+                    <!-- The label's for matches the input's id. -->
                     <label for="email">Email Address</label>
 
+                    <!-- The browser checks that the email is filled in
+                         and looks like an email address. -->
                     <input
                         type="email"
                         id="email"
@@ -63,10 +76,11 @@
                         required>
                 </div>
 
-                <!-- Password -->
                 <div class="form-group">
                     <label for="password">Password</label>
 
+                    <!-- Hides what the user types. current-password helps
+                         the browser fill in a saved password. -->
                     <input
                         type="password"
                         id="password"
@@ -76,18 +90,19 @@
                         required>
                 </div>
 
-                <!-- Error / Success Messages -->
+                <!-- auth.js can show feedback here. A screen reader
+                     can announce the message when it changes. -->
                 <p id="message"
                    role="status"
                    aria-live="polite"></p>
 
-                <!-- Submit Button -->
+                <!-- The browser checks the fields before submitting. -->
                 <button type="submit" class="auth-button">
                     Log In
                 </button>
             </form>
 
-            <!-- Registration Link -->
+            <!-- Takes new users to the registration page. -->
             <p class="auth-switch">
                 Don't have an account?
                 <a href="register.html">Register here</a>

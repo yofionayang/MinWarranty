@@ -1,16 +1,26 @@
+<!--
+    MinWarranty - Registration Page
+
+    Shows the form for creating an account.
+    Loads auth.js to handle form submission.
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!-- Makes the page fit the width of a phone screen. -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>MinWarranty | Register</title>
+
+    <!-- Loads the styles for this page. -->
     <link rel="stylesheet" href="css/style.css">
+    <!-- defer waits for the HTML to load before running auth.js. -->
     <script src="js/auth.js" defer></script>
 </head>
 
 <body class="auth-page">
 
-    <!-- Website Header -->
+    <!-- Header with links to Home, Login, and Register. -->
     <header id="header" class="auth-header">
         <a href="index.html" class="brand">
             MinWarranty
@@ -20,15 +30,16 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="login.html">Login</a></li>
                 <li>
+                    <!-- Marks Register as the current page. -->
                     <a href="register.html" aria-current="page"> Register</a>
                 </li>
             </ul>
         </nav>
     </header>
 
-    <!-- Registration Section -->
     <main class="auth-main">
 
+        <!--  the headings -->
         <section class="auth-card"
                  aria-labelledby="register-title">
 
@@ -45,15 +56,18 @@
                 </p>
             </div>
 
-            <!-- Registration Form -->
+            <!-- auth.js finds the form by its ID.
+                 data-mode tells the script this is the register form. -->
             <form id="auth-form"
                   data-mode="register"
                   class="auth-form">
 
-                <!-- Email -->
                 <div class="form-group">
+                    <!-- for="email" connects this label to the email input. -->
                     <label for="email">Email Address</label>
 
+                    <!-- The browser checks the email is filled in
+                         and looks like an email address. -->
                     <input
                         type="email"
                         id="email"
@@ -64,10 +78,11 @@
                         required>
                 </div>
 
-                <!-- Password -->
                 <div class="form-group">
                     <label for="password">Password</label>
 
+                    <!-- Hides what the user types and sets an 8 to 72
+                         character limit. aria-describedby links the hint below. -->
                     <input
                         type="password"
                         id="password"
@@ -80,16 +95,17 @@
                         required>
 
                     <small id="password-help">
-                        Use 8 to 72 characters.
+                        Use at least 8 characters.(max 72)
                     </small>
                 </div>
 
-                <!-- Confirm Password -->
                 <div class="form-group">
                     <label for="confirm-password">
                         Confirm Password
                     </label>
 
+                    <!-- The user retypes their password here.
+                         JavaScript can compare the two values. -->
                     <input
                         type="password"
                         id="confirm-password"
@@ -99,12 +115,13 @@
                         required>
                 </div>
 
-                <!-- Error / Success Messages -->
+                <!-- The script puts feedback here. A screen reader
+                     can read the message when it changes. -->
                 <p id="message"
                    role="status"
                    aria-live="polite"></p>
 
-                <!-- Register Button -->
+                <!-- The browser checks the fields before submitting. -->
                 <button type="submit" class="auth-button">
                     Create Account
                 </button>
@@ -119,7 +136,6 @@
         </section>
     </main>
 
-    <!-- Footer -->
     <footer class="auth-footer">
         <p>&copy; 2026 MinWarranty. All rights reserved.</p>
     </footer>
