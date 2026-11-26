@@ -5,7 +5,7 @@
         <meta name = "viewport" content = "width=device-width, initial-scale = 1">
         <title> MinWarranty | Dashboard </title>
         <link rel="stylesheet" href="css/style.css">
-        <script src="js/dashboard.js" defer></script>
+        <script type="module" src="js/dashboard.js"></script>
         <script src="js/logout.js" defer></script>
     </head>
     <body class="site-theme">
@@ -172,6 +172,7 @@
             <dialog id="deleteDialog" aria-labelledby="deleteDialogHeading">
                 <h2 id="deleteDialogHeading">Delete Warranty?</h2>
                 <p>This permanently deletes <strong id="deleteProductName"></strong>. This can't be undone.</p>
+                <p id="deleteError" class="form-error" role="alert"></p>
                 <div class="dialog-actions">
                     <button type="button" id="cancelDelete">Cancel</button>
                     <button type="button" id="confirmDelete">Delete</button>
