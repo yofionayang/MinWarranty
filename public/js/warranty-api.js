@@ -15,7 +15,7 @@ import { addMonths, getToday, toIsoDate } from './warranty-dates.js';
 import { validateWarranty } from './warranty-validation.js';
 
 // Set to false once the backend serves /api/warranties.
-const USE_MOCK_API = true;
+const USE_MOCK_API = false;
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
 const SIMULATED_DELAY_MS = 150;
