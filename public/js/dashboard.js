@@ -69,5 +69,73 @@ const fields = Object.fromEntries(
     ['warrantyId', ...FIELD_NAMES].map(name => [name, document.getElementById(name)])
 );
 
+let warranties = [];
+let pendingDeleteId = null;
 
+function redirectToLogin(){
+    window.location.assign('/login.html');
+}
+
+// ------------- building the list ----------------
+
+function createElement(tag, className, text){
+    const element = document.createElement(tag);
+
+    if (className) element.className = className;
+    if (text !== undefined) element.textContent = text;
+
+    return element;
+}
+
+function createDetail(label, value, isoDate){
+    const row = createElement('div');
+    const description = createElement('dd');
+
+    if (isoDate){
+        const time = createElement('time', '', value);
+        time.dateTime = isoDate;
+        description.append(time);
+    } else {
+        description.textContent = value;
+    }
+
+    row.append(createElement('dt', '', label), description);
+    return row;
+}
+
+function createActions(item){
+    const actions = createElement('div', 'warranty-actions');
+
+    const edit = createElement('button', 'edit-warranty', "Edit");
+    edit.type = 'button';
+    edit.setAttribute('aria-label', `Edit ${item.productName}`);
+
+    const remove = createElement('button', 'delete-warranty', 'Delete');
+    remove.type = 'button';
+    remove.setAttribute('aria-label', `Delete ${item.productName}`);
+
+    actions.append(edit, remove);
+    return actions;
+}
+
+function createCard(item){
+    const card = createElement('li', 'warranty-card');
+    card.dataset.id = item.id;
+
+    const header = createElement('div', 'warranty-card-header');
+    header.append(
+        createElement('h2', '', item.productName),
+        createElement('span', `status-badge status-${item.status}`, STATUS_LABELS[item.status])
+    );
+
+    if (item.retailer) details.append(createDetail('Retailer', item.retailer));
+    if (item.serialNumber) details.append(createDetail('Serial number', item.serialNumber));
+
+    card.append(header, details);
+
+    if (item.notes) card.append(createElement('p', 'warranty-notes', item.notes));
+
+    card.append(createActions(item));
+    return card;
+}
 
