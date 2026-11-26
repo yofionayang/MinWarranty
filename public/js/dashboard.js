@@ -2,31 +2,31 @@
 // All data goes through the `api` object. All user-supplied text is inserted
 // with textContent, never innerHTML, to prevent HTML injection (XSS).
 
-import { api, ApiError } from './warranty-validation.js';
+import { api, ApiError } from './warranty-api.js';
 import { LIMITS, validateWarranty } from './warranty-validation.js';
-import{
-    describeRemaining,
-    formatDate,
-    getDaysRemaining,
-    getExpiryDate,
-    getStatus,
-    getToday,
-    toIsoDate
+import {
+  describeRemaining,
+  formatDate,
+  getDaysRemaining,
+  getExpiryDate,
+  getStatus,
+  getToday,
+  toIsoDate
 } from './warranty-dates.js';
 
 const STATUS_LABELS = {
-    active: 'Active',
-    expiring: 'Expiring soon',
-    expired: 'Expired'
+  active: 'Active',
+  expiring: 'Expiring soon',
+  expired: 'Expired'
 };
 
 const FIELD_NAMES = [
-    'productName',
-    'purchaseDate',
-    'warrantyDuration',
-    'retailer',
-    'serialNumber',
-    'notes'
+  'productName',
+  'purchaseDate',
+  'warrantyDuration',
+  'retailer',
+  'serialNumber',
+  'notes'
 ];
 
 const SORTERS = {
@@ -64,79 +64,89 @@ const elements = {
   confirmDelete: document.getElementById('confirmDelete')
 };
 
-// the hidden id field plus one element per form field
+// The hidden id field plus one element per form field.
 const fields = Object.fromEntries(
-    ['warrantyId', ...FIELD_NAMES].map(name => [name, document.getElementById(name)])
+  ['warrantyId', ...FIELD_NAMES].map(name => [name, document.getElementById(name)])
 );
 
 let warranties = [];
 let pendingDeleteId = null;
 
-function redirectToLogin(){
-    window.location.assign('/login.html');
+function redirectToLogin() {
+  window.location.assign('/login.html');
 }
 
-// ------------- building the list ----------------
+// ---------- Building the list ----------
 
-function createElement(tag, className, text){
-    const element = document.createElement(tag);
+function createElement(tag, className, text) {
+  const element = document.createElement(tag);
 
-    if (className) element.className = className;
-    if (text !== undefined) element.textContent = text;
+  if (className) element.className = className;
+  if (text !== undefined) element.textContent = text;
 
-    return element;
+  return element;
 }
 
-function createDetail(label, value, isoDate){
-    const row = createElement('div');
-    const description = createElement('dd');
+function createDetail(label, value, isoDate) {
+  const row = createElement('div');
+  const description = createElement('dd');
 
-    if (isoDate){
-        const time = createElement('time', '', value);
-        time.dateTime = isoDate;
-        description.append(time);
-    } else {
-        description.textContent = value;
-    }
+  if (isoDate) {
+    const time = createElement('time', '', value);
+    time.dateTime = isoDate;
+    description.append(time);
+  } else {
+    description.textContent = value;
+  }
 
-    row.append(createElement('dt', '', label), description);
-    return row;
+  row.append(createElement('dt', '', label), description);
+  return row;
 }
 
-function createActions(item){
-    const actions = createElement('div', 'warranty-actions');
+function createActions(item) {
+  const actions = createElement('div', 'warranty-actions');
 
-    const edit = createElement('button', 'edit-warranty', "Edit");
-    edit.type = 'button';
-    edit.setAttribute('aria-label', `Edit ${item.productName}`);
+  const edit = createElement('button', 'edit-warranty', 'Edit');
+  edit.type = 'button';
+  edit.setAttribute('aria-label', `Edit ${item.productName}`);
 
-    const remove = createElement('button', 'delete-warranty', 'Delete');
-    remove.type = 'button';
-    remove.setAttribute('aria-label', `Delete ${item.productName}`);
+  const remove = createElement('button', 'delete-warranty', 'Delete');
+  remove.type = 'button';
+  remove.setAttribute('aria-label', `Delete ${item.productName}`);
 
-    actions.append(edit, remove);
-    return actions;
+  actions.append(edit, remove);
+  return actions;
 }
 
-function createCard(item){
-    const card = createElement('li', 'warranty-card');
-    card.dataset.id = item.id;
+function createCard(item) {
+  const card = createElement('li', 'warranty-card');
+  card.dataset.id = item.id;
 
-    const header = createElement('div', 'warranty-card-header');
-    header.append(
-        createElement('h2', '', item.productName),
-        createElement('span', `status-badge status-${item.status}`, STATUS_LABELS[item.status])
-    );
+  const header = createElement('div', 'warranty-card-header');
+  header.append(
+    createElement('h2', '', item.productName),
+    createElement('span', `status-badge status-${item.status}`, STATUS_LABELS[item.status])
+  );
 
-    if (item.retailer) details.append(createDetail('Retailer', item.retailer));
-    if (item.serialNumber) details.append(createDetail('Serial number', item.serialNumber));
+  const details = createElement('dl', 'warranty-details');
+  details.append(
+    createDetail('Purchased', formatDate(item.purchaseDate), item.purchaseDate),
+    createDetail('Expires', formatDate(item.expiryDate), item.expiryDate),
+    createDetail(
+      item.daysRemaining < 0 ? 'Expired' : 'Remaining',
+      describeRemaining(item.daysRemaining)
+    )
+  );
 
-    card.append(header, details);
+  if (item.retailer) details.append(createDetail('Retailer', item.retailer));
+  if (item.serialNumber) details.append(createDetail('Serial number', item.serialNumber));
 
-    if (item.notes) card.append(createElement('p', 'warranty-notes', item.notes));
+  card.append(header, details);
 
-    card.append(createActions(item));
-    return card;
+  if (item.notes) card.append(createElement('p', 'warranty-notes', item.notes));
+
+  card.append(createActions(item));
+  return card;
 }
 
 // ---------- Filtering, sorting, and rendering ----------
@@ -402,4 +412,3 @@ function init() {
 }
 
 init();
-
