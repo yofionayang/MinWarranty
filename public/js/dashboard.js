@@ -239,7 +239,6 @@ function ensureDurationOption(months) {
 function fillForm(warranty) {
   ensureDurationOption(warranty.warrantyDuration);
 
-  fields.warrantyId.value = warranty.id;
   fields.productName.value = warranty.productName;
   fields.purchaseDate.value = warranty.purchaseDate;
   fields.warrantyDuration.value = String(warranty.warrantyDuration);
@@ -262,6 +261,11 @@ function readForm() {
 function openForm(warranty = null) {
   elements.form.reset();
   clearFormErrors();
+
+  // form.reset() does not clear a hidden input once its value has been set,
+  // so the id is always set explicitly. A leftover id would turn "Add" into
+  // an update of the last warranty that was edited.
+  fields.warrantyId.value = warranty ? warranty.id : '';
 
   fields.purchaseDate.min = LIMITS.earliestPurchase;
   fields.purchaseDate.max = toIsoDate(getToday());
