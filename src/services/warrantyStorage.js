@@ -1,65 +1,92 @@
 
-const { randomUUID } = require('crypto');
-const { readCollection, writeCollection } = require('./jsonStore');
+/*
+ * MinWarranty - Warranty Storage
+ *
+ * Handles warranty CRUD operations.
+ * Every operation uses the owner's user_id.
+ * A warranty belonging to another user is treated
+ * as if it does not exist.
+ */
 
-// Get warranties belonging to one user.
+const { randomUUID } = require('crypto');
+const { readCollection, updateCollection } = require('./jsonStore');
+
+// Get all warranties belonging to one user.
 async function list(userId) {
   const warranties = await readCollection('warranties');
 
-  return warranties.filter(warranty => warranty.userId === userId);
+  return warranties.filter(
+    warranty => warranty.userId === userId
+  );
 }
 
-// Create a warranty for one user.
+// Create a new warranty for one user.
 async function create(userId, values) {
-  const warranties = await readCollection('warranties');
+  return updateCollection('warranties', warranties => {
 
-  const warranty = {
-    id: randomUUID(),
-    userId,
-    ...values
-  };
+    const warranty = {
+      id: randomUUID(),
+      userId,
+      ...values
+    };
 
-  warranties.push(warranty);
-  await writeCollection('warranties', warranties);
+    warranties.push(warranty);
 
-  return warranty;
+    return warranty;
+  });
 }
 
 // Update a warranty belonging to one user.
 async function update(userId, id, values) {
-  const warranties = await readCollection('warranties');
+  return updateCollection('warranties', warranties => {
 
-  const index = warranties.findIndex(
-    warranty => warranty.id === id && warranty.userId === userId
-  );
+    const index = warranties.findIndex(
+      warranty =>
+        warranty.id === id &&
+        warranty.userId === userId
+    );
 
-  if (index === -1) return null;
+    // Return null if the warranty doesn't exist
+    // or belongs to another user.
+    if (index === -1) {
+      return null;
+    }
 
-  warranties[index] = {
-    id,
-    userId,
-    ...values
-  };
+    warranties[index] = {
+      id,
+      userId,
+      ...values
+    };
 
-  await writeCollection('warranties', warranties);
-
-  return warranties[index];
+    return warranties[index];
+  });
 }
 
 // Delete a warranty belonging to one user.
 async function remove(userId, id) {
-  const warranties = await readCollection('warranties');
+  return updateCollection('warranties', warranties => {
 
-  const index = warranties.findIndex(
-    warranty => warranty.id === id && warranty.userId === userId
-  );
+    const index = warranties.findIndex(
+      warranty =>
+        warranty.id === id &&
+        warranty.userId === userId
+    );
 
-  if (index === -1) return false;
+    // Return false if the warranty doesn't exist
+    // or belongs to another user.
+    if (index === -1) {
+      return false;
+    }
 
-  warranties.splice(index, 1);
-  await writeCollection('warranties', warranties);
+    warranties.splice(index, 1);
 
-  return true;
+    return true;
+  });
 }
 
-module.exports = { list, create, update, remove };
+module.exports = {
+  list,
+  create,
+  update,
+  remove
+};
